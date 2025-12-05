@@ -47,7 +47,7 @@ Hier ein Gesamtprozess, wie ein Feature/Level/Asset durchs Team fließt.
 ```mermaid
 flowchart LR
     GD[3D Game Designer<br/>Nalin] -->|GDD, Styleguide,<br/>Levelkonzept| Mod[3D Modeller<br/>Baki]
-    Mod -->|3D-Modelle (ohne Materialien)| Mat[3D Material Artist<br/>Emmi]
+    Mod -->|3D-Modelle ohne Materialien| Mat[3D Material Artist<br/>Emmi]
     Mat -->|fertige Meshes mit Texturen,<br/>Shader-Setups| Pref[Unity Prefab Dev<br/>Noah]
     Pref -->|Prefabs mit Logik,<br/>Komponenten| LB[Level Builder<br/>Esra]
     LB -->|Szenen, Lighting,<br/>VFX, Builds| IO[Unity IO Dev<br/>Noah]
@@ -120,14 +120,14 @@ Hier eine Ansicht speziell für Level-Design und -Bau.
 
 ```mermaid
 flowchart TB
-    A[Game Design Doc<br/>(Levelziele, Core-Mechanics)]:::GD
-    B[Level-Blockout<br/>(Whitebox)]:::GD
-    C[Definition benötigter Assets<br/>(Props, Umgebung, Interactables)]:::GD
-    D[3D Modeling & Materials<br/>(Modeller + Material Artist)]:::Art
+    A[Game Design Doc<br/>Levelziele, Core-Mechanics]:::GD
+    B[Level-Blockout<br/>Whitebox]:::GD
+    C[Definition benötigter Assets<br/>Props, Umgebung, Interactables]:::GD
+    D[3D Modeling & Materials<br/>Modeller + Material Artist]:::Art
     E[Prefab-Erstellung<br/>(Prefab Dev)]:::Code
     F[Level Assembly<br/>(Level Builder)]:::Level
-    G[Gameplay-Tests<br/>(alle)]:::Test
-    H[Balancing & Polishing<br/>(GD + LB + IO)]:::Level
+    G[Gameplay-Tests<br/>alle]:::Test
+    H[Balancing & Polishing<br/>GD + LB + IO]:::Level
     I[Build-Erstellung & Bereitstellung]:::Build
 
     A --> B --> C --> D --> E --> F --> G --> H --> I
