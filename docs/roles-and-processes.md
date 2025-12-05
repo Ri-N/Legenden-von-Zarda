@@ -112,37 +112,7 @@ sequenceDiagram
 
 ---
 
-## 4. Level-/Scene-Workflow
-
-Hier eine Ansicht speziell für Level-Design und -Bau.
-
-## Detailprozess: Level-/Scene-Entwicklung
-
-```mermaid
-flowchart TB
-    A[Game Design Doc<br/>Levelziele, Core-Mechanics]:::GD
-    B[Level-Blockout<br/>Whitebox]:::GD
-    C[Definition benötigter Assets<br/>Props, Umgebung, Interactables]:::GD
-    D[3D Modeling & Materials<br/>Modeller + Material Artist]:::Art
-    E[Prefab-Erstellung<br/>Prefab Dev]:::Code
-    F[Level Assembly<br/>Level Builder]:::Level
-    G[Gameplay-Tests<br/>alle]:::Test
-    H[Balancing & Polishing<br/>GD + LB + IO]:::Level
-    I[Build-Erstellung & Bereitstellung]:::Build
-
-    A --> B --> C --> D --> E --> F --> G --> H --> I
-
-    classDef GD fill:#fdd;
-    classDef Art fill:#dfd;
-    classDef Code fill:#ddf;
-    classDef Level fill:#ffd;
-    classDef Test fill:#eef;
-    classDef Build fill:#fed;
-```
-
----
-
-## 5. UI / HUD / Input-Prozess (Unity IO Dev)
+## 4. UI / HUD / Input-Prozess (Unity IO Dev)
 
 Damit der IO-Dev-Part sauber dokumentiert ist, noch ein Flow nur für Menüs/HUD:
 
