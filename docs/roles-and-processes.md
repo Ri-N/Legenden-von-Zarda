@@ -15,12 +15,12 @@ flowchart LR
     end
 
     subgraph Rollen
-        GD[3D Game Designer\n(Game Design Doc,\nLevel Blockout, Styleguide,\nMockups, Material-Defs)]
-        Mod[3D Modeller\n(Hard Surface Modeling)]
-        Mat[3D Material Artist\n(Shader & Textures)]
-        LB[Level Builder\n(Scene-Orga, Terrain,\nLighting, Executables, VFX)]
-        IO[Unity IO Dev\n(GUI Menu & HUD,\nInput-Controller)]
-        Pref[Unity Prefab Dev\n(Instantiable Assets\nwith Code)]
+        GD[3D Game Designer<br/>Game Design Doc,<br/>Level Blockout, Styleguide,<br/>Mockups, Material-Defs]
+        Mod[3D Modeller<br/>Hard Surface Modeling]
+        Mat[3D Material Artist<br/>Shader & Textures]
+        LB[Level Builder<br/>Scene-Orga, Terrain,<br/>Lighting, Executables, VFX]
+        IO[Unity IO Dev<br/>GUI Menu & HUD,<br/>Input-Controller]
+        Pref[Unity Prefab Dev<br/>Instantiable Assets<br/>with Code]
     end
 
     %% Zuordnung bevorzugter Verantwortlichkeiten
