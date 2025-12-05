@@ -42,22 +42,20 @@ flowchart LR
 
 Hier ein Gesamtprozess, wie ein Feature/Level/Asset durchs Team fließt.
 
-````markdown
 ## High-Level-Prozess: Von Game Design zu spielbarem Build
 
 ```mermaid
 flowchart LR
-    GD[3D Game Designer\n(Nalin)] -->|GDD, Styleguide,\nLevelkonzept| Mod[3D Modeller\n(Baki)]
-    Mod -->|3D-Modelle (ohne Materialien)| Mat[3D Material Artist\n(Emmi)]
-    Mat -->|fertige Meshes mit Texturen,\nShader-Setups| Pref[Unity Prefab Dev\n(Noah)]
-    Pref -->|Prefabs mit Logik,\nKomponenten| LB[Level Builder\n(Esra)]
-    LB -->|Szenen, Lighting,\nVFX, Builds| IO[Unity IO Dev\n(Noah)]
-    IO -->|Menüs, HUD,\nInput-Konnektivität| Build[Spielbare Builds\n(PC/Export)]
+    GD[3D Game Designer<br/>Nalin] -->|GDD, Styleguide,<br/>Levelkonzept| Mod[3D Modeller<br/>Baki]
+    Mod -->|3D-Modelle (ohne Materialien)| Mat[3D Material Artist<br/>Emmi]
+    Mat -->|fertige Meshes mit Texturen,<br/>Shader-Setups| Pref[Unity Prefab Dev<br/>Noah]
+    Pref -->|Prefabs mit Logik,<br/>Komponenten| LB[Level Builder<br/>Esra]
+    LB -->|Szenen, Lighting,<br/>VFX, Builds| IO[Unity IO Dev<br/>Noah]
+    IO -->|Menüs, HUD,<br/>Input-Konnektivität| Build[Spielbare Builds<br/>PC/Export]
 
     %% Rückkopplungsschleifen
-    Build -->|Feedback zu Spielgefühl,\nLesbarkeit, Performance| GD
+    Build -->|Feedback zu Spielgefühl,<br/>Lesbarkeit, Performance| GD
 ```
-````
 
 **Interpretation (kurz):**
 
@@ -76,7 +74,6 @@ Das passt sehr gut zu deinem Beispiel:
 
 > Modeller entwirft 3D-Modell → Material Artist reviewt → Material Artist texturiert → usw.
 
-````markdown
 ## Detailprozess: 3D-Asset-Pipeline (Prop)
 
 ```mermaid
@@ -112,7 +109,6 @@ sequenceDiagram
     LB->>Pref: ggf. Anpassungen an Prefab (Collider, LOD)
     Pref-->>Mat: ggf. Anpassungen an Material (Performance, Lesbarkeit)
 ```
-````
 
 ---
 
@@ -120,7 +116,6 @@ sequenceDiagram
 
 Hier eine Ansicht speziell für Level-Design und -Bau.
 
-````markdown
 ## Detailprozess: Level-/Scene-Entwicklung
 
 ```mermaid
@@ -144,7 +139,6 @@ flowchart TB
     classDef Test fill:#eef;
     classDef Build fill:#fed;
 ```
-````
 
 ---
 
@@ -152,7 +146,6 @@ flowchart TB
 
 Damit der IO-Dev-Part sauber dokumentiert ist, noch ein Flow nur für Menüs/HUD:
 
-````markdown
 ## Detailprozess: UI, HUD & Input
 
 ```mermaid
@@ -178,4 +171,3 @@ sequenceDiagram
     GD-->>IO: Feedback (Usability, Verständlichkeit)
     IO->>IO: Anpassungen & Feintuning
 ```
-````
