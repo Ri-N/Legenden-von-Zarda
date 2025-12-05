@@ -124,8 +124,8 @@ flowchart TB
     B[Level-Blockout<br/>Whitebox]:::GD
     C[Definition benötigter Assets<br/>Props, Umgebung, Interactables]:::GD
     D[3D Modeling & Materials<br/>Modeller + Material Artist]:::Art
-    E[Prefab-Erstellung<br/>(Prefab Dev)]:::Code
-    F[Level Assembly<br/>(Level Builder)]:::Level
+    E[Prefab-Erstellung<br/>Prefab Dev]:::Code
+    F[Level Assembly<br/>Level Builder]:::Level
     G[Gameplay-Tests<br/>alle]:::Test
     H[Balancing & Polishing<br/>GD + LB + IO]:::Level
     I[Build-Erstellung & Bereitstellung]:::Build
