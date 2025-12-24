@@ -15,7 +15,7 @@
 Das Setting des Spiels ist ein mittelalterliches Fantasy-Szenario, das an das Europa des Mittelalters angelehnt ist. Der Protagonist soll als 18-jähriger Dorfjunge in diese Welt passen. Mit seinem äußeren Erscheinungsbild (blond, weiß, 180 cm groß, blaue Augen) repräsentiert er einen eher germanischen, nordeuropäischen Look. Damit passt der Protagonist gut in das Dorf und das Setting des Spiels.
 
 ### Das 3D Basis-Modell des Protagonisten
-Das Basis-Modell des Protagonisten soll einmal aus dem Körperbau, Äüßerlichen Features und den Klamotten bestehen die oben beschrieben werden.
+Das Basis-Modell des Protagonisten soll einmal aus dem Körperbau, Äußerlichen Features und den Klamotten bestehen die oben beschrieben werden.
 Also das Basis-Modell soll mit Stiefeln, Stoffhose und Tunika mit braunen Gürtel angezogen sein, das ist das Basis-Modell wenn der Protagonist keine Aurüstung trägt.
 
 
