@@ -16,7 +16,7 @@ Das Setting des Spiels ist ein mittelalterliches Fantasy-Szenario, das an das Eu
 
 ### Das 3D Basis-Modell des Protagonisten
 Das Basis-Modell des Protagonisten soll einmal aus dem Körperbau, Äüßerlichen Features und den Klamotten bestehen die oben beschrieben werden.
-Also das fertige Modell soll mit Stiefeln, Stoffhose und Tunika angezogen sein, das ist das Basis-Modell wenn der Protagonist keine Aurüstung trägt.
+Also das Basis-Modell soll mit Stiefeln, Stoffhose und Tunika mit braunen Gürtel angezogen sein, das ist das Basis-Modell wenn der Protagonist keine Aurüstung trägt.
 
 
 ### KI Bild zur Orientierung
