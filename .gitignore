@@ -1,0 +1,22 @@
+# --- Unity generated ---
+unity/[Ll]ibrary/
+unity/[Tt]emp/
+unity/[Oo]bj/
+unity/[Bb]uild/
+unity/[Bb]uilds/
+unity/[Ll]ogs/
+unity/[Uu]ser[Ss]ettings/
+unity/[Mm]emoryCaptures/
+unity/[Rr]ecordings/
+
+# --- IDEs ---
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.userprefs
+
+# --- Node ---
+node_modules/
+npm-debug.log*
