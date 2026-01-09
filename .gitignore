@@ -25,3 +25,7 @@ unity/[Rr]ecordings/
 # --- Node ---
 node_modules/
 npm-debug.log*
+
+# --- .NET build artifacts ---
+**/[Bb]in/
+**/[Oo]bj/
