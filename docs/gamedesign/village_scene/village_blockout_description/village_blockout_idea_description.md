@@ -19,7 +19,7 @@ Das Dorf soll folgendes beinhalten:
 
 ### Wichtige NPCs im Dorf
 
-#### George:
+#### Gregory:
 - Seit Jahren im Dorf als Wache aktiv.
 - Nicht gesprächig und verbringt seine meiste Zeit bei der Kampfarena wenn er gerade nicht die Tore bewacht.
 - Bewundert `Stärke`.
@@ -77,6 +77,8 @@ Das Dorf soll folgendes beinhalten:
   Klares Tageslicht im Dorf. Man hört Leute reden an bestimmten Stellen im Dorf.
   - **Abend:**
   Das Licht im Dorf wird Abends hauptsächlich durch das Mondlicht und Fackeln an den Zäunen und Häusern erzeugt. Man hört Eulen zwischendurch.
+
+Nachdem man eine Aktivität Abends macht oder sich schon schlafen legt beginnt ein neuer Tag Morgens. Bestimmte Quest brauchen manchmal einen Tageszylus durch damit sie beendet sind oder für bestimmte Events muss eine bestimmte Zeit abgelaufen sein ergo Story-Progession.
 
 #### Interaktion mit wichtigen NPCs
 
@@ -143,12 +145,12 @@ Die Assets sind in Reihenfolge der Relevanz zur Game-User-Story für das Dorf pr
 
 Die folgende Game-User-Story beschreibt eine Quest die der Protagonist für den NPC Bertram erledigt.
 
-1. Der Spieler befindet sich in seinem Zimmer
-2. Der Spieler läuft zu seinem Schwert und interagiert damit und merkt das er es mal reparieren sollte
-3. Der Spieler interagiert ein 2tes mal mit dem Schwert und entscheidet sich das Schwert mitzunehmen
-4. Der Spieler läuft zum Ausrüstungsladen
-5. Der Spieler spricht mit Bertram und will sein Schwert erneuern lassen
-6. Bertram gibt dem Spieler eine Quest, der Spieler soll ein schweres Objekt an einem Wächter (George) bringen
-7. Der Spieler läuft zur Kampfarena weil sich George dort oft aufhält
-8. Der Spieler übergibt das Objekt an George, und George gibt das Geld für das Objekt an dem Spieler
+1. Der Spieler befindet sich in seinem Zimmer.
+2. Der Spieler läuft zu seinem Schwert und interagiert damit und merkt das er es mal reparieren sollte.
+3. Der Spieler interagiert ein 2tes mal mit dem Schwert und entscheidet sich das Schwert mitzunehmen.
+4. Der Spieler läuft zum Ausrüstungsladen.
+5. Der Spieler spricht mit Bertram und will sein Schwert erneuern lassen.
+6. Bertram gibt dem Spieler eine Quest, der Spieler soll ein schweres Objekt an einem Wächter (George) bringen.
+7. Der Spieler läuft zur Kampfarena weil sich George dort oft aufhält.
+8. Der Spieler übergibt das Objekt an George, und George gibt das Geld für das Objekt an dem Spieler.
 9. Der Spieler bringt das Geld zu Bertram und er fängt an das Schwert in einen besseren Zustand zu bringen, man kann es ein Tag später abholen.
