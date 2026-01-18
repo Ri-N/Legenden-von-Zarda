@@ -1,0 +1,331 @@
+# Village Scene Blockout – Dokumentation
+
+## 1. Übersicht
+Kurze Übersicht zum Zweck des Dorf-Blockouts und dem Kontext im Spiel.
+
+- **Szenentyp:** Dorf (Außenareal)
+- **Zweck:**  
+  - Zentrale Hub-Area des Spiels  
+  - Verbindung zwischen Story, Quests und Gameplay-Systemen  
+  - Einführung wichtiger NPCs  
+  - Trainings-, Handels- und Sozialraum
+- **Hinweis:**  
+  Das Dorf dient als lebendige Spielwelt. Die hier beschriebene Game-User-Story **SOLL** spielbar sein, ist aber **nicht zwingend erforderlich**, um das Spiel voranzubringen. Der Spieler kann das Dorf frei erkunden, Aktivitäten ignorieren oder gezielt nutzen.
+
+---
+
+## 2. Interaktions- & Navigationssystem
+
+### Steuerung
+- **Bewegung:** WASD (Standard)
+- **Interaktionstaste:** `E`
+- **Mindestdistanz:** < 0.75m (größer als bei Innenräume)
+
+### Interaktions-Feedback
+- Visueller Hinweis `[E]` bei Objekten/NPCs  
+- Leichte Hervorhebung (Outline / Light Tint)  
+- Dialogfenster bei NPC interaktion oder direkte Aktion
+
+---
+
+## 3. Tageszyklus & Atmosphäre
+
+### Tagesphasen
+- **Morgen:**
+  - Warmes Licht
+  - Vogelgeräusche
+
+- **Mittag:**  
+  - Klares Licht  
+  - Dorfalltag hörbar  
+
+- **Abend:**  
+  - Mondlicht  
+  - Fackeln  
+  - Eulen  
+
+**Hinweis:**  
+Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
+
+---
+
+## 4. Wichtige NPCs im Dorf
+
+### Gregory – Wache
+- Aufenthaltsort: Kampfarena / Tore  
+- Persönlichkeit: Still, diszipliniert  
+- Bewundert: `Stärke`
+
+**Interaktionsrolle:**  
+- Trainings-Quest  
+- Kampfrelevante Dialoge  
+
+---
+
+### Bertram – Ausrüstungshändler
+- Aufenthaltsort: Ausrüstungsladen  
+- Persönlichkeit: Gierig, aber leidenschaftlicher Schmied  
+- Bewundert: `Glück`
+
+**Interaktionsrolle:**  
+- Händler
+- Questgeber
+- Upgrade-System
+
+---
+
+### Mila – Dorfbewohnerin
+- Aufenthaltsort: Haus / Dorfbereich
+- Persönlichkeit: Ruhig, neugierig
+- Bewundert: `Intelligenz`
+
+**Interaktionsrolle:**  
+- Lore / Backgorund Informationen
+- Optionale Nebenquests
+
+---
+
+## 5. Beziehungsstatus-System (NPCs)
+
+### Zustände
+- Gleichgültig  
+- Reserviert
+- Verwirrt
+- Wohlgesonnen
+- Ablehnend
+
+### Zustandsdynamik
+
+
+- Gleichgültig → Reserviert / Wohlgesonnen / Verwirrt
+- Verwirrt → Reserviert / Wohlgesonnen / Ablehnend / Gleichgültig
+- Wohlgesonnen → Verwirrt / Gleichgültig
+- Reserviert → Verwirrt / Ablehnend
+- Ablehnend → Reserviert / Verwirrt
+
+---
+
+## 6. Dorf – Struktur & Layout
+
+### Gesamtübersicht Dorf Blockout
+![Village Blockout Übersicht](../village_blockout_screenshots/Village_Blockout_Overview.png)
+
+### Annotierte Übersicht (Zonen & Assets)
+![Village Blockout Annotation](../village_blockout_screenshots/Village_Blockout_Annotated.png)
+
+### Zonen-Übersicht:
+| Zone | Beschreibung |
+|----|----|
+| Wohnbereich | Häuser inkl. Haus des Protagonisten |
+| Handelsbereich | Ausrüstungsladen |
+| Trainingsbereich | Kampfarena |
+| Sozialbereich | Gasthaus |
+| Infrastruktur | Straße, Zäune, Tore |
+
+---
+
+## 7. Game-User-Story Ablauf – Dorf Quest (Bertram)
+
+Die folgende Game-User-Story startet im **Zimmer des Protagonisten** und führt den Spieler anschließend ins Dorf.  
+Sie verbindet die Room-Szene direkt mit der Dorf-Szene und nutzt das Schwert als zentrales Gameplay-Element.
+
+---
+
+### Schritt 1: Im Zimmer aufwachen
+![Schritt 1 – Zimmer Start](../village_blockout_screenshots/Step_1_Room_Start.png)
+
+> Der Spieler befindet sich in seinem Zimmer und hat die Kontrolle über den Charakter.
+
+Fokus:
+- Übergang von Tutorial zu freier Bewegung  
+- Vertraute Umgebung aus der Room-Szene  
+
+---
+
+### Schritt 2: Interaktion mit dem Schwert
+![Schritt 2 – Schwert im Zimmer](../village_blockout_screenshots/Step_2_Room_Sword.png)
+
+> Der Spieler interagiert mit dem rostigen Schwert im Zimmer.
+
+Ergebnis:
+- Gedankendialog über den schlechten Zustand  
+- Möglichkeit, das Schwert mitzunehmen  
+
+---
+
+### Schritt 3: Zimmer verlassen
+![Schritt 3 – Zimmer verlassen](../village_blockout_screenshots/Step_3_Room_Exit.png)
+
+> Der Spieler verlässt das Zimmer und betritt das Dorf.
+
+Fokus:
+- Übergang Innenraum → Außenareal  
+- Erste Sicht auf die Dorfstraße  
+
+---
+
+### Schritt 4: Ankunft im Dorf
+![Schritt 4 – Dorf Ankunft](../village_blockout_screenshots/Step_4_Village_Enter.png)
+
+> Der Spieler steht auf der zentralen Straße des Dorfes.
+
+Fokus:
+- Orientierung  
+- Sicht auf wichtige Gebäude  
+
+---
+
+### Schritt 5: Weg zum Ausrüstungsladen
+![Schritt 5 – Weg zum Shop](../village_blockout_screenshots/Step_5_Village_To_Shop.png)
+
+> Der Spieler läuft entlang der Straße zum Ausrüstungsladen.
+
+Gameplay:
+- Wegführung  
+- Lesbarkeit des Dorf-Layouts  
+
+---
+
+### Schritt 6: Gespräch mit Bertram
+![Schritt 6 – Gespräch mit Bertram](../village_blockout_screenshots/Step_6_Village_Bertram.png)
+
+> Der Spieler spricht Bertram auf das beschädigte Schwert an.
+
+Ergebnis:
+- Einführung von Bertrams Persönlichkeit  
+- Aufsetzen der Quest  
+
+---
+
+### Schritt 7: Quest erhalten
+![Schritt 7 – Quest erhalten](../village_blockout_screenshots/Step_7_Village_Quest.png)
+
+> Bertram bittet den Spieler, ein schweres Objekt zu Gregory zu bringen.
+
+Quest-Ziel:
+- Übergabe an Gregory in der Kampfarena  
+
+---
+
+### Schritt 8: Weg zur Kampfarena
+![Schritt 8 – Weg zur Arena](../village_blockout_screenshots/Step_8_Village_To_Arena.png)
+
+> Der Spieler bewegt sich zur Kampfarena.
+
+Fokus:
+- Arena als visuelle Landmarke  
+- Klarer Navigationspfad  
+
+---
+
+### Schritt 9: Übergabe an Gregory
+![Schritt 9 – Übergabe an Gregory](../village_blockout_screenshots/Step_9_Village_Gregory.png)
+
+> Der Spieler übergibt das Objekt an Gregory.
+
+Ergebnis:
+- Kurzer Dialog  
+- Erhalt des Geldes  
+
+---
+
+### Schritt 10: Rückkehr zu Bertram
+![Schritt 10 – Rückkehr zu Bertram](../village_blockout_screenshots/Step_10_Village_Back_To_Shop.png)
+
+> Der Spieler kehrt mit dem Geld zum Ausrüstungsladen zurück.
+
+Fokus:
+- Wiederholter Weg  
+- Gefühl von Fortschritt  
+
+---
+
+### Schritt 11: Schwertreparatur starten
+![Schritt 11 – Schwert Reparatur](../village_blockout_screenshots/Step_11_Village_Sword_Repair.png)
+
+> Bertram beginnt mit der Reparatur des Schwertes.
+
+Hinweis:
+- Quest-Abschluss  
+- Schwert kann nach einem Tageszyklus abgeholt werden
+
+---
+
+## 8. Asset-Übersicht mit Referenzen & Beschreibung
+
+### 8.1 Häuser
+![Haus Blockout](../village_blockout_screenshots/House_Blockout.png)
+
+- **Stil:** Holz, einstöckig
+- **Funktion:** Worldbuilding, NPC-Wohnorte
+
+---
+
+### 8.2 Ausrüstungsladen
+![Ausrüstungsladen Blockout](../village_blockout_screenshots/Shop_Blockout.png)
+
+- **Typ:** Offener Stand  
+- **Sichtbare Assets:**
+  - Waffen an Wänden
+  - Amboss  
+- **Gameplay:** Kaufen, Reparieren, Quests
+- **NPCs**: Bertram
+
+---
+
+### 8.3 Kampfarena
+![Arena Blockout](../village_blockout_screenshots/Arena_Blockout.png)
+
+- **Struktur:** Offener Platz mit Holzzaun  
+- **Nutzung:**  
+  - Training
+  - Turniere
+- **Gameplay:**
+  - Trainieren für Stats verbessern
+- **NPCs:** Gregory & Wachen
+
+---
+
+### 8.4 Gasthaus
+![Gasthaus Blockout](../village_blockout_screenshots/Inn_Blockout.png)
+
+- **Größe:** Größer als Wohnhäuser  
+- **Etagen:** EG, 1G, 2G  
+- **Gameplay:**
+  - Schlafen
+  - Dialoge 
+  - Story-Events
+- **NPCs:** Dorfbewohner, Fahrende Händler, Söldner
+
+---
+
+### 8.5 Straße
+![Straße Blockout](../village_blockout_screenshots/Road_Blockout.png)
+
+- **Material:** Erde
+- **Funktion:**
+  - Navigation
+  - Händlerbewegung
+
+---
+
+### 8.6 Zaun & Tore
+![Zaun Blockout](../village_blockout_screenshots/Fence_Blockout.png)
+
+- **Material:** Holz
+- **Gameplay:**
+  - Tag-/Nacht-Zyklus
+  - Tore nachts geschlossen
+
+---
+
+## 9. Asset-Priorisierung
+
+| Priorität | Asset | Begründung |
+|-----------|-------|------------|
+| 1 | Haus | Startpunkt wenn man das Zimmer verlässt |
+| 2 | Aurüstungsladen | Zweiter Ort in der Game-User-Story |
+| 3 | Kampfarena | Dritter Ort der Game-User-Story |
+| 4 | Straße | Atmosphäre/Worldbuilding |
+| 5 | Zaun + Tore | Gibt dem Dorf nochmals eine "größere" Bedeutung |
+| 6 | Gasthaus | Nice to have aber nicht wichtig für die Game-User-Story |
