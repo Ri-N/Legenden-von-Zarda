@@ -108,19 +108,26 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 ## 6. Dorf – Struktur & Layout
 
 ### Gesamtübersicht Dorf Blockout
-![Village Blockout Übersicht](../village_blockout_screenshots/Village_Blockout_Overview.png)
+![Village Blockout Übersicht](../village_blockout_screenshots/Initial_Village_Blockout.png)
 
 ### Annotierte Übersicht (Zonen & Assets)
-![Village Blockout Annotation](../village_blockout_screenshots/Village_Blockout_Annotated.png)
+![Village Blockout Annotation](../village_blockout_screenshots/Initial_Village_Blockout_Asset_Naming.png)
 
 ### Zonen-Übersicht:
 | Zone | Beschreibung |
-|----|----|
-| Wohnbereich | Häuser inkl. Haus des Protagonisten |
-| Handelsbereich | Ausrüstungsladen |
-| Trainingsbereich | Kampfarena |
-| Sozialbereich | Gasthaus |
-| Infrastruktur | Straße, Zäune, Tore |
+|------|--------------|
+| Wohnbereich (West) | Häuser inklusive Haus des Protagonisten und von Mila |
+| Handelsbereich (Süd-Westlich) | Ausrüstungsladen und Haus von Bertram |
+| Trainingsbereich (Süd-Östlich) | Kampfarena und Aufenthaltsort von Gregory |
+| Wohnbereich (Ost) | Häuser von einfachen NPCs/Dorfbewohnern |
+| Gasthausbereich (Nord-Östlich) | Gasthaus und Aufenthaltsort von Händler und Söldnern |
+
+### Infrastrktur:
+| Teil | Beschreibung |
+|------|--------------|
+| Straße | Läuft in der Mitte durch das Dorf hindurch, hauptsächlich von fahrenden Händlern besetzt |
+| Zaun | Eine großer Zaun um das Dorf einmal drum, zur Verteidigung von Wildtieren und Monstern nachts |
+| Tore (nicht im Blockout drin) | Beide Toren am beiden Enden der Straße schließen Abends zur Sicherheit des Dorfes |
 
 ---
 
@@ -128,6 +135,14 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 
 Die folgende Game-User-Story startet im **Zimmer des Protagonisten** und führt den Spieler anschließend ins Dorf.  
 Sie verbindet die Room-Szene direkt mit der Dorf-Szene und nutzt das Schwert als zentrales Gameplay-Element.
+
+### Hinweis zu Protagonist und NPCs darstellung
+
+Der Protagonist ist mit einem Kegel in dem Blockout repräsentiert:
+![Protagonist darstellung](pfad/zu/kegel)
+
+NPCs sind mit einem umgedrehten Kegel repräsentiert:
+![NPCs darstellung](pfad/zu/umgedrehter_kegel)
 
 ---
 
