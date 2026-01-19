@@ -107,10 +107,10 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 
 ## 6. Dorf – Struktur & Layout
 
-### Gesamtübersicht Dorf Blockout
+### Gesamtübersicht Dorf Blockout:
 ![Village Blockout Übersicht](../village_blockout_screenshots/Initial_Village_Blockout.png)
 
-### Annotierte Übersicht (Zonen & Assets)
+### Annotierte Übersicht (Zonen & Assets):
 ![Village Blockout Annotation](../village_blockout_screenshots/Initial_Village_Blockout_Asset_Naming.png)
 
 ### Zonen-Übersicht:
@@ -122,9 +122,9 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 | Wohnbereich (Ost) | Häuser von einfachen NPCs/Dorfbewohnern |
 | Gasthausbereich (Nord-Östlich) | Gasthaus und Aufenthaltsort von Händler und Söldnern |
 
-### Infrastrktur:
-| Teil | Beschreibung |
-|------|--------------|
+### Infrastruktur:
+| Asset | Beschreibung |
+|-------|--------------|
 | Straße | Läuft in der Mitte durch das Dorf hindurch, hauptsächlich von fahrenden Händlern besetzt |
 | Zaun | Eine großer Zaun um das Dorf einmal drum, zur Verteidigung von Wildtieren und Monstern nachts |
 | Tore (nicht im Blockout drin) | Beide Toren am beiden Enden der Straße schließen Abends zur Sicherheit des Dorfes |
@@ -138,18 +138,23 @@ Sie verbindet die Room-Szene direkt mit der Dorf-Szene und nutzt das Schwert als
 
 ### Hinweis zu Protagonist und NPCs darstellung
 
-Der Protagonist ist mit einem Kegel in dem Blockout repräsentiert:
-![Protagonist darstellung](pfad/zu/kegel)
+#### Der Protagonist ist mit einem Kegel in dem Blockout repräsentiert:
+![Protagonist darstellung](../village_blockout_screenshots/Protagonist_Representation.png)
 
-NPCs sind mit einem umgedrehten Kegel repräsentiert:
-![NPCs darstellung](pfad/zu/umgedrehter_kegel)
+#### NPCs sind mit einem umgedrehten Kegel repräsentiert:
+![NPCs darstellung](../village_blockout_screenshots/NPC_Representation.png)
 
 ---
 
 ### Schritt 1: Im Zimmer aufwachen
 ![Schritt 1 – Zimmer Start](../village_blockout_screenshots/Step_1_Room_Start.png)
 
-> Der Spieler befindet sich in seinem Zimmer und hat die Kontrolle über den Charakter.
+> Der Spieler befindet sich in seinem Zimmer.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Fokus:
 - Übergang von Tutorial zu freier Bewegung  
@@ -160,7 +165,12 @@ Fokus:
 ### Schritt 2: Interaktion mit dem Schwert
 ![Schritt 2 – Schwert im Zimmer](../village_blockout_screenshots/Step_2_Room_Sword.png)
 
-> Der Spieler interagiert mit dem rostigen Schwert im Zimmer.
+> Der Spieler interagiert mit dem rostigen Schwert im Zimmer zweimal.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Ergebnis:
 - Gedankendialog über den schlechten Zustand  
@@ -173,70 +183,89 @@ Ergebnis:
 
 > Der Spieler verlässt das Zimmer und betritt das Dorf.
 
-Fokus:
-- Übergang Innenraum → Außenareal  
-- Erste Sicht auf die Dorfstraße  
+**Dialog:**
+```text
+(Placeholder)
+``` 
 
 ---
 
 ### Schritt 4: Ankunft im Dorf
-![Schritt 4 – Dorf Ankunft](../village_blockout_screenshots/Step_4_Village_Enter.png)
 
-> Der Spieler steht auf der zentralen Straße des Dorfes.
+#### Nördliche Sicht:
+![Schritt 4 – Dorf Ankunft (Nördliche Sicht)](../village_blockout_screenshots/Step_4_Village_Enter_North_Direction.png)
 
-Fokus:
-- Orientierung  
-- Sicht auf wichtige Gebäude  
+#### Östliche Sicht:
+![Schritt 4 – Dorf Ankunft (Östliche Sicht)](../village_blockout_screenshots/Step_4_Village_Enter_East_Direction.png)
+
+#### Südliche Sicht:
+![Schritt 4 – Dorf Ankunft (Südliche Sicht)](../village_blockout_screenshots/Step_4_Village_Enter_South_Direction.png)
+
+#### Vogelperspektive:
+![Schritt 4 – Dorf Ankunft (Vogelperspektive)](../village_blockout_screenshots/Step_4_Village_Enter_Bird_Perspective.png)
+
+> Der Spieler steht vor seinem Haus
+
+- Fokus:
+  - Orientierung  
+  - Sicht auf wichtige Gebäude  
 
 ---
 
 ### Schritt 5: Weg zum Ausrüstungsladen
-![Schritt 5 – Weg zum Shop](../village_blockout_screenshots/Step_5_Village_To_Shop.png)
+![Schritt 5 – Weg zum Shop](../village_blockout_screenshots/Step_5_Home_To_Shop.png)
 
 > Der Spieler läuft entlang der Straße zum Ausrüstungsladen.
-
-Gameplay:
-- Wegführung  
-- Lesbarkeit des Dorf-Layouts  
 
 ---
 
 ### Schritt 6: Gespräch mit Bertram
-![Schritt 6 – Gespräch mit Bertram](../village_blockout_screenshots/Step_6_Village_Bertram.png)
+![Schritt 6 – Gespräch mit Bertram](../village_blockout_screenshots/Step_6_Armory_Shop_Bertram.png)
 
 > Der Spieler spricht Bertram auf das beschädigte Schwert an.
 
+**Dialog:**
+```text
+(Placeholder)
+```
+
 Ergebnis:
 - Einführung von Bertrams Persönlichkeit  
-- Aufsetzen der Quest  
+- Aufsetzen der Quest
 
 ---
 
-### Schritt 7: Quest erhalten
-![Schritt 7 – Quest erhalten](../village_blockout_screenshots/Step_7_Village_Quest.png)
+### Schritt 6.5: Quest erhalten
+![Schritt 6.5 – Quest erhalten](../village_blockout_screenshots/Step_6_Armory_Shop_Bertram.png)
 
 > Bertram bittet den Spieler, ein schweres Objekt zu Gregory zu bringen.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Quest-Ziel:
 - Übergabe an Gregory in der Kampfarena  
 
 ---
 
-### Schritt 8: Weg zur Kampfarena
-![Schritt 8 – Weg zur Arena](../village_blockout_screenshots/Step_8_Village_To_Arena.png)
+### Schritt 7: Weg zur Kampfarena
+![Schritt 7 – Weg zur Arena](../village_blockout_screenshots/Step_7_Armory_Shop_To_Arena_Gregory.png)
 
 > Der Spieler bewegt sich zur Kampfarena.
 
-Fokus:
-- Arena als visuelle Landmarke  
-- Klarer Navigationspfad  
-
 ---
 
-### Schritt 9: Übergabe an Gregory
-![Schritt 9 – Übergabe an Gregory](../village_blockout_screenshots/Step_9_Village_Gregory.png)
+### Schritt 8: Übergabe an Gregory
+![Schritt 8 – Übergabe an Gregory](../village_blockout_screenshots/Step_8_Arena_Gregory_Item_Transfer.png)
 
 > Der Spieler übergibt das Objekt an Gregory.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Ergebnis:
 - Kurzer Dialog  
@@ -244,10 +273,15 @@ Ergebnis:
 
 ---
 
-### Schritt 10: Rückkehr zu Bertram
-![Schritt 10 – Rückkehr zu Bertram](../village_blockout_screenshots/Step_10_Village_Back_To_Shop.png)
+### Schritt 9: Rückkehr zu Bertram
+![Schritt 9 – Rückkehr zu Bertram](../village_blockout_screenshots/Step_9_Arena_To_Armory_Shop.png)
 
 > Der Spieler kehrt mit dem Geld zum Ausrüstungsladen zurück.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Fokus:
 - Wiederholter Weg  
@@ -255,10 +289,15 @@ Fokus:
 
 ---
 
-### Schritt 11: Schwertreparatur starten
-![Schritt 11 – Schwert Reparatur](../village_blockout_screenshots/Step_11_Village_Sword_Repair.png)
+### Schritt 10: Schwertreparatur starten
+![Schritt 10 – Schwert Reparatur](../village_blockout_screenshots/Step_11_Village_Sword_Repair.png)
 
 > Bertram beginnt mit der Reparatur des Schwertes.
+
+**Dialog:**
+```text
+(Placeholder)
+```
 
 Hinweis:
 - Quest-Abschluss  
