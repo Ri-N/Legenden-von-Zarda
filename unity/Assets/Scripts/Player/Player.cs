@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float interactionRange = 5f;
     [SerializeField] private GameInput gameInput;
 
+    private bool canMove = true;
+
 
     public event Action<IInteractable, IInteractable> OnInteractableChanged;
 
@@ -24,16 +26,25 @@ public class Player : MonoBehaviour
 
     public IInteractable CurrentInteractable => current;
 
+
     private void Awake()
     {
         Instance = this;
         characterController = GetComponent<CharacterController>();
     }
 
+    private void Start()
+    {
+        gameInput.OnInteractAction += GameInput_OnInteractAction;
+    }
+
     private void Update()
     {
-        HandleMovement();
-        UpdateCurrentInteractable();
+        if (canMove)
+        {
+            HandleMovement();
+            UpdateCurrentInteractable();
+        }
     }
 
     private void HandleMovement()
@@ -100,15 +111,14 @@ public class Player : MonoBehaviour
         OnInteractableChanged?.Invoke(prev, current);
     }
 
-    private void HandleInteractions()
+    private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, this.interactionRange);
-        foreach (Collider collider in colliders)
-        {
-            if (collider.TryGetComponent(out IInteractable interactable))
-            {
-                interactable.Interact();
-            }
-        }
+        IInteractable interactable = GetInteractableObject();
+        interactable?.Interact();
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        this.canMove = canMove;
     }
 }

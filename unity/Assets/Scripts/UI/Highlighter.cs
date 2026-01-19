@@ -16,7 +16,7 @@ public class Highlighter : MonoBehaviour
     [SerializeField] private float highlightIntensity = .4f;
 
     [Tooltip("If true, highlights all child renderers of the interactable object.")]
-    [SerializeField] private bool includeChildren = false;
+    [SerializeField] private bool includeChildren = true;
 
 
     private readonly Dictionary<Renderer, Color> originalEmission = new();
