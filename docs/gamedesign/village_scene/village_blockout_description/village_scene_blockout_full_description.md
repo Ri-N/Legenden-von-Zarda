@@ -5,7 +5,7 @@ Kurze Übersicht zum Zweck des Dorf-Blockouts und dem Kontext im Spiel.
 
 - **Szenentyp:** Dorf (Außenareal)
 - **Zweck:**  
-  - Zentrale Hub-Area des Spiels  
+  - Zentrale Hub-Area des Spiels
   - Verbindung zwischen Story, Quests und Gameplay-Systemen  
   - Einführung wichtiger NPCs  
   - Trainings-, Handels- und Sozialraum
@@ -95,8 +95,6 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 - Ablehnend
 
 ### Zustandsdynamik
-
-
 - Gleichgültig → Reserviert / Wohlgesonnen / Verwirrt
 - Verwirrt → Reserviert / Wohlgesonnen / Ablehnend / Gleichgültig
 - Wohlgesonnen → Verwirrt / Gleichgültig
@@ -133,7 +131,8 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 
 ## 7. Game-User-Story Ablauf – Dorf Quest (Bertram)
 
-Die folgende Game-User-Story startet im **Zimmer des Protagonisten** und führt den Spieler anschließend ins Dorf.  
+Die folgende Game-User-Story startet im **Zimmer des Protagonisten** und führt den Spieler anschließend ins Dorf.
+
 Sie verbindet die Room-Szene direkt mit der Dorf-Szene und nutzt das Schwert als zentrales Gameplay-Element.
 
 ### Hinweis zu Protagonist und NPCs darstellung
@@ -151,15 +150,6 @@ Sie verbindet die Room-Szene direkt mit der Dorf-Szene und nutzt das Schwert als
 
 > Der Spieler befindet sich in seinem Zimmer.
 
-**Dialog:**
-```text
-(Placeholder)
-```
-
-Fokus:
-- Übergang von Tutorial zu freier Bewegung  
-- Vertraute Umgebung aus der Room-Szene  
-
 ---
 
 ### Schritt 2: Interaktion mit dem Schwert
@@ -168,13 +158,34 @@ Fokus:
 > Der Spieler interagiert mit dem rostigen Schwert im Zimmer zweimal.
 
 **Dialog:**
+
+`Erste Interaktion:`
 ```text
-(Placeholder)
+*Du blickst auf das Schwert*
+"..."
+"Rost."
+"Mehr Rost als Erinnerung."
+"..."
+"Früher war es schwer."
+"Jetzt fühlt es sich nur noch müde an."
+"..."
+"Vielleicht lässt sich noch etwas retten."
 ```
 
-Ergebnis:
-- Gedankendialog über den schlechten Zustand  
-- Möglichkeit, das Schwert mitzunehmen  
+`Zweite Interaktion:`
+```text
+"Allein lassen bringt nichts."
+"Mitnehmen auch nicht."
+"..."
+
+*Willst du das Schwert mitnehmen?*
+> Ja
+> Nein
+```
+
+<br>
+
+Wenn der Spieler Ja drückt dann hat er das Schwert in seinem Iventar. Er will es zum Ausrüstungsladen bringen um es reparieren zu lassen.
 
 ---
 
@@ -185,7 +196,18 @@ Ergebnis:
 
 **Dialog:**
 ```text
-(Placeholder)
+*Willst du rausgehen?*
+> Ja
+> Nein
+
+> Nein:
+"Draußen ist es laut."
+"Hier drin ist es ruhig."
+"..."
+"Zu ruhig."
+
+> Ja:
+*Kein Dialog, du verlässt das Zimmer*
 ``` 
 
 ---
@@ -206,10 +228,6 @@ Ergebnis:
 
 > Der Spieler steht vor seinem Haus
 
-- Fokus:
-  - Orientierung  
-  - Sicht auf wichtige Gebäude  
-
 ---
 
 ### Schritt 5: Weg zum Ausrüstungsladen
@@ -225,13 +243,26 @@ Ergebnis:
 > Der Spieler spricht Bertram auf das beschädigte Schwert an.
 
 **Dialog:**
+
+`Protagnist:`
 ```text
-(Placeholder)
+*Du legst das Schwert auf den Tresen*
+"..."
+"Es war mal besser."
 ```
 
-Ergebnis:
-- Einführung von Bertrams Persönlichkeit  
-- Aufsetzen der Quest
+<br>
+
+`Bertram:`
+```text
+*Bertram betrachtet die Klinge*
+"Hm."
+"..."
+"War?"
+"..."
+"Das Ding wurde lange nicht gepflegt."
+"Und lange nicht benutzt."
+```
 
 ---
 
@@ -241,9 +272,37 @@ Ergebnis:
 > Bertram bittet den Spieler, ein schweres Objekt zu Gregory zu bringen.
 
 **Dialog:**
+
+`Bertram:`
 ```text
-(Placeholder)
+*Bertram lehnt sich zurück*
+"Ich kann es richten."
+"..."
+"Aber nicht umsonst."
 ```
+
+```text
+"Bring Gregory das hier."
+"Schwer."
+"Unhandlich."
+"..."
+"Er schuldet mir noch etwas."
+"Du bringst es ihm."
+"Er gibt dir das Geld."
+"Ich repariere das Schwert."
+```
+
+<br>
+
+`Protagonist (intern):`
+```text
+"..."
+"Natürlich schuldet jemand Bertram etwas."
+```
+
+<br>
+
+Nachdem Gespräch hat der Spieler jetzt ein schweres Objekt in seinem Inventar. Dieses muss er zu Gregory bringen.
 
 Quest-Ziel:
 - Übergabe an Gregory in der Kampfarena  
@@ -263,13 +322,43 @@ Quest-Ziel:
 > Der Spieler übergibt das Objekt an Gregory.
 
 **Dialog:**
+
+`Protagonist:`
 ```text
-(Placeholder)
+*Du stellst das Objekt ab*
+"Von Bertram."
 ```
 
-Ergebnis:
-- Kurzer Dialog  
-- Erhalt des Geldes  
+<br>
+
+`Gregory:`
+```text
+*Gregory mustert dich*
+"..."
+"Schwer genug."
+```
+
+```text
+"Er hätte selbst kommen können."
+"..."
+"Aber er schickt lieber andere."
+```
+
+```text
+*Gregory reicht dir das Geld*
+"Das ist alles."
+```
+
+<br>
+
+`Protagonist:`
+```text
+"..."
+"Spricht nicht viel."
+"Passt zur Arena."
+```
+
+Der Spieler hat jetzt das Geld von Gregory bekommen, dass er dann zu Bertram bringen soll.
 
 ---
 
@@ -278,11 +367,6 @@ Ergebnis:
 
 > Der Spieler kehrt mit dem Geld zum Ausrüstungsladen zurück.
 
-**Dialog:**
-```text
-(Placeholder)
-```
-
 Fokus:
 - Wiederholter Weg  
 - Gefühl von Fortschritt  
@@ -290,73 +374,117 @@ Fokus:
 ---
 
 ### Schritt 10: Schwertreparatur starten
-![Schritt 10 – Schwert Reparatur](../village_blockout_screenshots/Step_11_Village_Sword_Repair.png)
+![Schritt 10 – Schwert Reparatur](../village_blockout_screenshots/Step_10_Armory_Shop_Sword_Repair.png)
 
 > Bertram beginnt mit der Reparatur des Schwertes.
 
 **Dialog:**
+
+`Bertram:`
 ```text
-(Placeholder)
+*Bertram nimmt das Geld*
+"Gut."
 ```
 
-Hinweis:
-- Quest-Abschluss  
-- Schwert kann nach einem Tageszyklus abgeholt werden
+```text
+*Bertram schaut sich das Schwert nochmal genauer an*
+"Ein Tag."
+"Mehr nicht."
+"..."
+"Danach ist es wieder brauchbar."
+"Nicht neu."
+"Aber ehrlich."
+```
+
+<br>
+
+`Protagonist (intern):`
+```text
+"..."
+"Reicht."
+```
+
+Die Quest ist damit abgeschlossen und das Schwert kann nach einem Tageszyklus abgeholt werden.
 
 ---
 
 ## 8. Asset-Übersicht mit Referenzen & Beschreibung
 
 ### 8.1 Häuser
-![Haus Blockout](../village_blockout_screenshots/House_Blockout.png)
+![Haus Blockout](../village_blockout_reference_assets/house_reference.png)
+**Source:** https://www.artstation.com/marketplace/p/xYJX/wooden-hut-with-interior
 
 - **Stil:** Holz, einstöckig
+- **Maße:**
+  - Breite: 8 Meter
+  - Länge: 6.5 Meter
+  - Höhe: 8 Meter
 - **Funktion:** Worldbuilding, NPC-Wohnorte
 
 ---
 
 ### 8.2 Ausrüstungsladen
-![Ausrüstungsladen Blockout](../village_blockout_screenshots/Shop_Blockout.png)
+![Ausrüstungsladen Blockout](../village_blockout_reference_assets/armor_shop_reference.webp)
+**Source:** https://www.behance.net/gallery/23946963/Medieval-Blacksmith-Shop-Lowpoly-game-asset
 
-- **Typ:** Offener Stand  
+- **Maße:**
+  - Breite: 8 Meter
+  - Länge: 4 Meter
+  - Höhe: 5 Meter
+- **Typ:** Offener Stand
 - **Sichtbare Assets:**
   - Waffen an Wänden
   - Amboss  
 - **Gameplay:** Kaufen, Reparieren, Quests
 - **NPCs**: Bertram
+- **Hinweis:** Das Referenz Bild entspricht nicht genau wie der Ausrüstungsladen aussehen soll, aber es gibt schonmal eine gute Übersicht wie es Aussehen kann. Die Form des Ladens sollte sich eher an das Blockout orientieren.
 
 ---
 
 ### 8.3 Kampfarena
-![Arena Blockout](../village_blockout_screenshots/Arena_Blockout.png)
+![Arena Blockout](../village_blockout_reference_assets/arena_reference.jpg)
+**Source:** https://www.turbosquid.com/3d-models/medieval-wooden-fight-arena-pbr-model-2359589
 
 - **Struktur:** Offener Platz mit Holzzaun  
+- **Maße**:
+  - Ein Kreis mit einem durchmesser von 40 Metern
 - **Nutzung:**  
   - Training
   - Turniere
 - **Gameplay:**
   - Trainieren für Stats verbessern
 - **NPCs:** Gregory & Wachen
+- **Hinweis:** In dieser Referenz in dem Assets sieht man noch Sitzplätze die sollen nicht da sein. Es ist eine komplett `offene` kleine Kampf-/Trainingsarena für die Wachen, also die Arena besteht **nur** aus dem Holzzaun.
 
 ---
 
 ### 8.4 Gasthaus
-![Gasthaus Blockout](../village_blockout_screenshots/Inn_Blockout.png)
+![Gasthaus Blockout](../village_blockout_reference_assets/inn_reference.webp)
+**Source:** https://assetstore.unity.com/packages/3d/environments/fantasy/pb-sword-shield-inn-63205
 
-- **Größe:** Größer als Wohnhäuser  
-- **Etagen:** EG, 1G, 2G  
+- **Maße:**
+  - Breite: 35 meter
+  - Länge 25 Meter
+  - Höhe 24 Meter
+- **Größe:** Größer als Wohnhäuser
+- **Etagen:** EG, 1G, 2G
 - **Gameplay:**
   - Schlafen
   - Dialoge 
   - Story-Events
 - **NPCs:** Dorfbewohner, Fahrende Händler, Söldner
+- **Hinweis:** Die Verlinkung ist zu dem Game Asset aus dem referenz Bild. Es ist ein kostenloses Asset aus dem Unity Asset Store, kann verwendet werden wenn die Zeit nicht mehr reicht.
 
 ---
 
 ### 8.5 Straße
-![Straße Blockout](../village_blockout_screenshots/Road_Blockout.png)
+![Straße Blockout](../village_blockout_reference_assets/dirt_road_reference.webp)
+**Source:** https://www.cgtrader.com/3d-models/scanned/various/16k-dry-dirt-road-material-n14-12-meters
 
 - **Material:** Erde
+- **Maße:**
+  - Länge: 300 Meter (Einmal durch das ganze Dorf)
+  - Breite: 25 Meter
 - **Funktion:**
   - Navigation
   - Händlerbewegung
@@ -364,12 +492,25 @@ Hinweis:
 ---
 
 ### 8.6 Zaun & Tore
-![Zaun Blockout](../village_blockout_screenshots/Fence_Blockout.png)
+![Zaun Blockout](../village_blockout_reference_assets/wall_gate_reference.jpg)
+**Source:** https://www.youtube.com/watch?v=QwPD6GkaJCA
 
 - **Material:** Holz
+- **Zaun Höhe:** 30 Meter
 - **Gameplay:**
   - Tag-/Nacht-Zyklus
   - Tore nachts geschlossen
+- **Hinweis:** Das Youtube Video zeigt wie man die Zäune und Tore machen kann.
+
+---
+
+### Hinweise zu den Assets
+
+#### Referenzbilder:
+Zu allen Referenzbildern gibt es einen Link zu der Website aus dem ich das Bild runtergeladen habe. Die Assets *müssen nicht* genauso aussehen. Sie dienen als Orientierung zur Modellierung/Texturierung der Assets.
+
+#### Maße:
+In den Asset-Referenzen sind die Maßen angegeben die das Asset **haben** soll. Die Maße müssen aber nicht zu 100% einstimmen mit dem fertigem Modell, es dient lediglich als Orienterung.
 
 ---
 
