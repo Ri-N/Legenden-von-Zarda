@@ -11,6 +11,10 @@ public class Window : InteractableBase, IDialogueTrigger, IInteractionConstraint
     [Tooltip("Reference transform whose forward defines the 'front' side. If not set, this Window's transform is used.")]
     [SerializeField] private Transform sideReference;
 
+    [Header("Area constraint")]
+    [Tooltip("If set, the window can only be interacted with in these player areas. Leave empty to allow in all areas.")]
+    [SerializeField] private PlayerArea[] allowedAreas;
+
     public DialogueController DialogueController => dialogueController;
     public DialogueText DialogueText => dialogueText;
 
@@ -24,18 +28,14 @@ public class Window : InteractableBase, IDialogueTrigger, IInteractionConstraint
         DialogueController.StartDialogue(dialogueText, this);
     }
 
-    public bool CanInteract(Vector3 playerWorldPosition)
+    public bool CanInteract(in InteractionContext ctx)
     {
-        if (allowedSide == InteractionSide.Both)
+        if (!InteractionConstraintUtil.IsAreaAllowed(allowedAreas, ctx.PlayerArea))
         {
-            return true;
+            return false;
         }
 
         Transform t = sideReference != null ? sideReference : transform;
-
-        float dot = Vector3.Dot(t.forward, playerWorldPosition - t.position);
-        bool isFront = dot >= 0f;
-
-        return allowedSide == InteractionSide.FrontOnly ? isFront : !isFront;
+        return InteractionConstraintUtil.IsSideAllowed(allowedSide, t, ctx.PlayerWorldPosition);
     }
 }

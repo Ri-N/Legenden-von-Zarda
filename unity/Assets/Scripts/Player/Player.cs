@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float interactionRayHeight = 1.2f;
 
     [SerializeField] private GameInput gameInput;
+    private PlayerWorldState playerWorldState;
 
     private bool canMove = true;
 
@@ -51,18 +52,19 @@ public class Player : MonoBehaviour
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
 
-        if (PlayerWorldState.Instance != null)
+        playerWorldState = PlayerWorldState.Instance;
+        if (playerWorldState != null)
         {
-            PlayerWorldState.Instance.AreaChanged += OnAreaChanged;
-            ApplyArea(PlayerWorldState.Instance.CurrentArea);
+            playerWorldState.AreaChanged += OnAreaChanged;
+            ApplyArea(playerWorldState.CurrentArea);
         }
     }
 
     private void OnDestroy()
     {
-        if (PlayerWorldState.Instance != null)
+        if (playerWorldState != null)
         {
-            PlayerWorldState.Instance.AreaChanged -= OnAreaChanged;
+            playerWorldState.AreaChanged -= OnAreaChanged;
         }
 
         if (gameInput != null)
@@ -121,10 +123,18 @@ public class Player : MonoBehaviour
             if (!collider.TryGetComponent(out IInteractable interactable))
             { continue; }
 
-            IInteractionConstraint constraint = collider.GetComponent<IInteractionConstraint>();
-            if (constraint != null && !constraint.CanInteract(transform.position))
+            if (collider.TryGetComponent(out IInteractionConstraint constraint))
             {
-                continue;
+                PlayerArea area = playerWorldState != null
+                    ? playerWorldState.CurrentArea
+                    : PlayerArea.Room;
+
+                var ctx = new InteractionContext(transform.position, area);
+
+                if (!constraint.CanInteract(in ctx))
+                {
+                    continue;
+                }
             }
 
             Vector3 delta = interactable.GetTransform().position - transform.position;
