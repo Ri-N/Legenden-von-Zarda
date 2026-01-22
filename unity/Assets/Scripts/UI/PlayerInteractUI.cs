@@ -8,7 +8,7 @@ public class PlayerInteractUI : MonoBehaviour
     [SerializeField] private GameObject containerGameObject;
     [SerializeField] private TextMeshProUGUI interactText;
 
-    [SerializeField] private Vector3 worldOffset = new Vector3(0f, 1.6f, 0f);
+    [SerializeField] private Vector3 worldOffset = new(0f, 1.6f, 0f);
 
     private Player player;
     private IInteractable currentInteractable;
@@ -73,11 +73,10 @@ public class PlayerInteractUI : MonoBehaviour
         }
         else if (parentCanvas != null)
         {
-            RectTransform canvasRect = parentCanvas.transform as RectTransform;
+            var canvasRect = parentCanvas.transform as RectTransform;
             if (canvasRect != null)
             {
-                Vector2 localPoint;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, uiCamera, out localPoint);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, uiCamera, out Vector2 localPoint);
                 containerRect.anchoredPosition = localPoint;
             }
             else

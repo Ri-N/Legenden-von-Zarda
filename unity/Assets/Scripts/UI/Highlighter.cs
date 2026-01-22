@@ -45,7 +45,7 @@ public class Highlighter : MonoBehaviour
         if (interactable == null) { return; }
 
 
-        Component component = interactable as Component;
+        var component = interactable as Component;
         if (component == null) { return; }
 
         currentRenderers.Clear();
@@ -54,8 +54,7 @@ public class Highlighter : MonoBehaviour
             component.GetComponentsInChildren(true, currentRenderers);
         else
         {
-            Renderer r = component.GetComponent<Renderer>();
-            if (r != null) currentRenderers.Add(r);
+            if (component.TryGetComponent(out Renderer r)) currentRenderers.Add(r);
         }
 
 
@@ -84,7 +83,7 @@ public class Highlighter : MonoBehaviour
     {
         if (interactable == null) { return; }
 
-        Component component = interactable as Component;
+        var component = interactable as Component;
         if (component == null) { return; }
 
 
@@ -96,15 +95,14 @@ public class Highlighter : MonoBehaviour
         }
         else
         {
-            Renderer r = component.GetComponent<Renderer>();
-            if (r != null) { currentRenderers.Add(r); }
+            if (component.TryGetComponent(out Renderer r)) { currentRenderers.Add(r); }
         }
 
         foreach (Renderer rend in currentRenderers)
         {
             if (rend == null) { continue; }
 
-            if (originalEmission.TryGetValue(rend, out var original))
+            if (originalEmission.TryGetValue(rend, out Color original))
             {
                 rend.GetPropertyBlock(mpb);
                 mpb.SetColor(EmissionColorId, original);

@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+        var moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
         if (characterController.isGrounded && verticalVelocity < 0f)
         {
@@ -162,7 +162,6 @@ public class Player : MonoBehaviour
     }
     private bool HasLineOfSight(IInteractable interactable, Collider interactableCollider)
     {
-        // Ray origin roughly at player chest/eye height.
         Vector3 origin = transform.position + Vector3.up * interactionRayHeight;
 
         Vector3 target = interactableCollider != null
@@ -185,7 +184,6 @@ public class Player : MonoBehaviour
                 return true;
             }
 
-            // Otherwise something (e.g., wall) is in the way.
             return false;
         }
 

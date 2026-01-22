@@ -18,7 +18,7 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private Button choiceButtonPrefab;
 
     [TextArea(5, 10)]
-    private Queue<string> paragraphs = new Queue<string>();
+    private readonly Queue<string> paragraphs = new();
 
     private bool conversationEnded;
     private bool isTyping;
@@ -43,24 +43,17 @@ public class DialogueController : MonoBehaviour
 
     public void DisplayNextParagraph(DialogueText dialogueText)
     {
-        // If we're waiting for the player to pick a choice, ignore continue input.
         if (awaitingChoice)
         {
             return;
         }
 
-        // Allow callers to pass null while continuing an active dialogue.
-        // Also: if some external caller keeps passing the *initial* DialogueText on every "continue" press,
-        // we must not reset the active dialogue while we're mid-conversation.
         if (dialogueText != null)
         {
-            // Accept a new DialogueText only when we are starting fresh or when the current node is exhausted.
-            // (e.g., after a choice selection we clear the queue, so paragraphs.Count == 0)
             if (activeDialogue == null || conversationEnded || paragraphs.Count == 0)
             {
                 activeDialogue = dialogueText;
             }
-            // Otherwise ignore the parameter and keep continuing the current activeDialogue.
         }
 
         if (activeDialogue == null)
@@ -88,10 +81,9 @@ public class DialogueController : MonoBehaviour
         }
         else
         {
-            finishParagraphEarly();
+            FinishParagraphEarly();
         }
 
-        // If we reached the end of the paragraphs, either show choices or mark as ended.
         if (paragraphs.Count == 0)
         {
             if (activeDialogue.choices != null && activeDialogue.choices.Length > 0)
@@ -168,7 +160,7 @@ public class DialogueController : MonoBehaviour
         isTyping = false;
     }
 
-    private void finishParagraphEarly()
+    private void FinishParagraphEarly()
     {
         StopCoroutine(typeDialogueCoroutine);
         bodyText.text = p;
@@ -199,26 +191,16 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        foreach (var choice in dialogueText.choices)
+        foreach (ChoiceOption choice in dialogueText.choices)
         {
-            var btn = Instantiate(choiceButtonPrefab, choicesContainer);
+            Button btn = Instantiate(choiceButtonPrefab, choicesContainer);
 
-            // Set label text (supports either TMP_Text or Text)
-            var tmp = btn.GetComponentInChildren<TMP_Text>();
+            TMP_Text tmp = btn.GetComponentInChildren<TMP_Text>();
             if (tmp != null)
             {
                 tmp.text = choice.optionText;
+                btn.onClick.AddListener(() => OnChoiceSelected(choice));
             }
-            else
-            {
-                var legacyText = btn.GetComponentInChildren<Text>();
-                if (legacyText != null)
-                {
-                    legacyText.text = choice.optionText;
-                }
-            }
-
-            btn.onClick.AddListener(() => OnChoiceSelected(choice));
         }
     }
 
@@ -229,7 +211,6 @@ public class DialogueController : MonoBehaviour
             choicesRoot.SetActive(false);
         }
 
-        // Optional: also clear any instantiated buttons
         if (choicesContainer != null)
         {
             for (int i = choicesContainer.childCount - 1; i >= 0; i--)
@@ -247,7 +228,7 @@ public class DialogueController : MonoBehaviour
         // Execute side-effects tied to this choice (optional)
         if (choice != null && choice.outcomes != null)
         {
-            foreach (var outcome in choice.outcomes)
+            foreach (DialogueOutcomeAction outcome in choice.outcomes)
             {
                 if (outcome == null) continue;
 
@@ -264,12 +245,10 @@ public class DialogueController : MonoBehaviour
 
         if (choice == null || choice.next == null)
         {
-            // Choice leads nowhere -> end immediately so player regains control
             EndConversation();
             return;
         }
 
-        // Start the next node immediately
         paragraphs.Clear();
         conversationEnded = false;
         DisplayNextParagraph(choice.next);

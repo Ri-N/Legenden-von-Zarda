@@ -56,10 +56,8 @@ public class Door : InteractableBase, IDialogueTrigger, IHasTeleportPoints
             return true;
         }
 
-        // Define the separating plane between inside/outside as the midpoint between entry/exit.
         Vector3 planePoint = (entryPoint.position + exitPoint.position) * 0.5f;
 
-        // Define outside normal from entry -> exit.
         Vector3 outsideNormal = (exitPoint.position - entryPoint.position).normalized;
         if (outsideNormal.sqrMagnitude < 0.0001f)
         {
