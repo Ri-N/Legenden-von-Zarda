@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float gravity = -25f;
+    [Header("Interaction ranges by area")]
+    [SerializeField] private float interactionRangeRoom = 5f;
+    [SerializeField] private float interactionRangeVillage = 7.5f;
     [SerializeField] private float interactionRange = 5f;
 
     [Header("Interaction")]
@@ -47,6 +50,25 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+
+        if (PlayerWorldState.Instance != null)
+        {
+            PlayerWorldState.Instance.AreaChanged += OnAreaChanged;
+            ApplyArea(PlayerWorldState.Instance.CurrentArea);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerWorldState.Instance != null)
+        {
+            PlayerWorldState.Instance.AreaChanged -= OnAreaChanged;
+        }
+
+        if (gameInput != null)
+        {
+            gameInput.OnInteractAction -= GameInput_OnInteractAction;
+        }
     }
 
     private void Update()
@@ -143,6 +165,21 @@ public class Player : MonoBehaviour
     public void SetCanMove(bool canMove)
     {
         this.canMove = canMove;
+    }
+
+    private void OnAreaChanged(PlayerArea newArea, PlayerAreaContext ctx)
+    {
+        ApplyArea(newArea);
+    }
+
+    public void ApplyArea(PlayerArea area)
+    {
+        interactionRange = area switch
+        {
+            PlayerArea.Room => interactionRangeRoom,
+            PlayerArea.Village => interactionRangeVillage,
+            _ => interactionRange,
+        };
     }
 
     public void MoveTo(Vector3 worldPosition)

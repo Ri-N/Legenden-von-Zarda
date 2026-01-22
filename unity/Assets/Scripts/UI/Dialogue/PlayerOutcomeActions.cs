@@ -5,12 +5,13 @@ public class TeleportPlayerOutsideOutcome : DialogueOutcomeAction
 {
     public override void Execute(DialogueOutcomeContext ctx)
     {
-        if (Player.Instance == null) return;
-
-        if (ctx.Interactor is not IHasTeleportPoints hasExit || hasExit.ExitPoint == null)
+        if (PlayerWorldState.Instance == null)
+        {
+            Debug.LogError("TeleportPlayerOutsideOutcome: PlayerWorldState.Instance is null. Ensure a PlayerWorldState exists in the scene.");
             return;
+        }
 
-        Player.Instance.MoveTo(hasExit.ExitPoint.position);
+        PlayerWorldState.Instance.RequestArea(PlayerArea.Village, ctx.Interactor);
     }
 }
 
@@ -19,11 +20,12 @@ public class TeleportPlayerInsideOutcome : DialogueOutcomeAction
 {
     public override void Execute(DialogueOutcomeContext ctx)
     {
-        if (Player.Instance == null) return;
-
-        if (ctx.Interactor is not IHasTeleportPoints hasExit || hasExit.EntryPoint == null)
+        if (PlayerWorldState.Instance == null)
+        {
+            Debug.LogError("TeleportPlayerInsideOutcome: PlayerWorldState.Instance is null. Ensure a PlayerWorldState exists in the scene.");
             return;
+        }
 
-        Player.Instance.MoveTo(hasExit.EntryPoint.position);
+        PlayerWorldState.Instance.RequestArea(PlayerArea.Room, ctx.Interactor);
     }
 }
