@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SwordContainer : InteractableBase, IMonologueTrigger
+public class SwordContainer : InteractableBase, IDialogueTrigger
 {
     [SerializeField] private DialogueController dialogueController;
     [SerializeField] private DialogueText dialogueText;
@@ -11,11 +11,11 @@ public class SwordContainer : InteractableBase, IMonologueTrigger
 
     public override void Interact()
     {
-        TriggerMonologue(dialogueText);
+        TriggerDialogue(dialogueText);
     }
 
-    public void TriggerMonologue(DialogueText dialogueText)
+    public void TriggerDialogue(DialogueText dialogueText)
     {
-        dialogueController.DisplayNextParagraph(dialogueText);
+        dialogueController.StartDialogue(dialogueText, this);
     }
 }

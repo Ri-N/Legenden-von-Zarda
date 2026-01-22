@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Desk : InteractableBase, IMonologueTrigger
+public class Desk : InteractableBase, IDialogueTrigger
 {
     [SerializeField] private DialogueController dialogueController;
     [SerializeField] private DialogueText dialogueText;
@@ -10,11 +10,11 @@ public class Desk : InteractableBase, IMonologueTrigger
 
     public override void Interact()
     {
-        TriggerMonologue(DialogueText);
+        TriggerDialogue(DialogueText);
     }
 
-    public void TriggerMonologue(DialogueText dialogueText)
+    public void TriggerDialogue(DialogueText dialogueText)
     {
-        DialogueController.DisplayNextParagraph(dialogueText);
+        DialogueController.StartDialogue(dialogueText, this);
     }
 }

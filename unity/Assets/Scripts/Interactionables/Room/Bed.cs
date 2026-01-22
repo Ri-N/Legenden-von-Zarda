@@ -1,15 +1,21 @@
 using UnityEngine;
 
-public class Bed : InteractableBase
+public class Bed : InteractableBase, IDialogueTrigger
 {
+
+    [SerializeField] private DialogueController dialogueController;
+    [SerializeField] private DialogueText dialogueText;
+
+    public DialogueController DialogueController => dialogueController;
+    public DialogueText DialogueText => dialogueText;
 
     public override void Interact()
     {
-        Sleep();
+        TriggerDialogue(DialogueText);
     }
 
-    private void Sleep()
+    public void TriggerDialogue(DialogueText dialogueText)
     {
-        Debug.Log("Player sleeps in the bed.");
+        DialogueController.StartDialogue(dialogueText, this);
     }
 }

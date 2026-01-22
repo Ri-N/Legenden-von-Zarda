@@ -14,6 +14,17 @@ public class Player : MonoBehaviour
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float gravity = -25f;
     [SerializeField] private float interactionRange = 5f;
+
+    [Header("Interaction")]
+    [Tooltip("Layers that contain interactable colliders.")]
+    [SerializeField] private LayerMask interactableMask = ~0;
+
+    [Tooltip("Layers that can block interaction line-of-sight (e.g., Walls, Default).")]
+    [SerializeField] private LayerMask obstructionMask = ~0;
+
+    [Tooltip("Ray origin height offset for line-of-sight checks.")]
+    [SerializeField] private float interactionRayHeight = 1.2f;
+
     [SerializeField] private GameInput gameInput;
 
     private bool canMove = true;
@@ -82,14 +93,26 @@ public class Player : MonoBehaviour
         IInteractable closestInteractable = null;
         float closestDistSq = float.PositiveInfinity;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, interactionRange, interactableMask, QueryTriggerInteraction.Ignore);
         foreach (Collider collider in colliders)
         {
             if (!collider.TryGetComponent(out IInteractable interactable))
             { continue; }
 
+            IInteractionConstraint constraint = collider.GetComponent<IInteractionConstraint>();
+            if (constraint != null && !constraint.CanInteract(transform.position))
+            {
+                continue;
+            }
+
             Vector3 delta = interactable.GetTransform().position - transform.position;
             float distSq = delta.sqrMagnitude;
+
+            // Block interaction through obstacles.
+            if (!HasLineOfSight(interactable, collider))
+            {
+                continue;
+            }
 
             if (distSq < closestDistSq)
             {
@@ -120,5 +143,52 @@ public class Player : MonoBehaviour
     public void SetCanMove(bool canMove)
     {
         this.canMove = canMove;
+    }
+
+    public void MoveTo(Vector3 worldPosition)
+    {
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+        }
+
+        transform.position = worldPosition;
+        verticalVelocity = 0f;
+
+        if (characterController != null)
+        {
+            characterController.enabled = true;
+        }
+    }
+    private bool HasLineOfSight(IInteractable interactable, Collider interactableCollider)
+    {
+        // Ray origin roughly at player chest/eye height.
+        Vector3 origin = transform.position + Vector3.up * interactionRayHeight;
+
+        Vector3 target = interactableCollider != null
+            ? interactableCollider.ClosestPoint(origin)
+            : interactable.GetTransform().position;
+
+        // If the target is basically at origin, consider it visible.
+        Vector3 dir = target - origin;
+        float dist = dir.magnitude;
+        if (dist < 0.05f) return true;
+
+        dir /= dist;
+
+        // If anything on obstructionMask is between origin and target, block interaction.
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, dist, obstructionMask, QueryTriggerInteraction.Ignore))
+        {
+            // Allow if the first hit is the interactable itself.
+            if (interactableCollider != null && hit.collider == interactableCollider)
+            {
+                return true;
+            }
+
+            // Otherwise something (e.g., wall) is in the way.
+            return false;
+        }
+
+        return true;
     }
 }

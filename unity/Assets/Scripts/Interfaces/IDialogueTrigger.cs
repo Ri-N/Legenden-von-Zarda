@@ -1,7 +1,7 @@
-public interface IMonologueTrigger
+public interface IDialogueTrigger
 {
     DialogueController DialogueController { get; }
     DialogueText DialogueText { get; }
 
-    void TriggerMonologue(DialogueText dialogueText);
+    void TriggerDialogue(DialogueText dialogueText);
 }
