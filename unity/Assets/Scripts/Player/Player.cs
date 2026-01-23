@@ -10,9 +10,24 @@ public class Player : MonoBehaviour
     private CharacterController characterController;
 
 
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float rotationSpeed = 10f;
+
+    [Tooltip("How fast the character turns to face movement direction")]
+    [Range(0.0f, 0.3f)]
+    [SerializeField] private float rotationSmoothTime = 0.12f;
+
+    [Tooltip("Acceleration and deceleration")]
+    [SerializeField] private float speedChangeRate = 10.0f;
+
     [SerializeField] private float gravity = -25f;
+
+    private float speed;
+    private float targetRotation;
+    private float rotationVelocity;
+
+    private GameObject mainCamera;
+
     [Header("Interaction ranges by area")]
     [SerializeField] private float interactionRangeRoom = 5f;
     [SerializeField] private float interactionRangeVillage = 7.5f;
@@ -46,6 +61,11 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         characterController = GetComponent<CharacterController>();
+
+        if (mainCamera == null)
+        {
+            mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        }
     }
 
     private void Start()
@@ -84,9 +104,45 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
+        // Read input (your GameInput currently returns a normalized vector)
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
-        var moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
+        // Determine target speed (0 when no input)
+        float targetSpeed = (inputVector == Vector2.zero) ? 0.0f : moveSpeed;
+
+        // Current horizontal speed (ignore vertical velocity)
+        float currentHorizontalSpeed = new Vector3(characterController.velocity.x, 0.0f, characterController.velocity.z).magnitude;
+
+        float speedOffset = 0.1f;
+
+        // Smooth speed changes
+        if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
+        {
+            speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed, Time.deltaTime * speedChangeRate);
+            speed = Mathf.Round(speed * 1000f) / 1000f;
+        }
+        else
+        {
+            speed = targetSpeed;
+        }
+
+        // Camera-relative input direction
+        Vector3 inputDirection = new Vector3(inputVector.x, 0.0f, inputVector.y).normalized;
+
+        // Rotate towards movement direction relative to camera
+        if (inputVector != Vector2.zero)
+        {
+            float cameraYaw = (mainCamera != null) ? mainCamera.transform.eulerAngles.y : transform.eulerAngles.y;
+            targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
+
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+        }
+
+        // Move in the facing direction
+        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+
+        // Gravity / vertical
         if (characterController.isGrounded && verticalVelocity < 0f)
         {
             verticalVelocity = -2f;
@@ -94,16 +150,10 @@ public class Player : MonoBehaviour
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 velocity = moveDir * moveSpeed;
-        velocity.y = verticalVelocity;
+        Vector3 motion = targetDirection.normalized * (speed * Time.deltaTime);
+        motion.y = verticalVelocity * Time.deltaTime;
 
-        characterController.Move(velocity * Time.deltaTime);
-
-        // Rotate towards horizontal movement direction
-        if (moveDir.sqrMagnitude > 0.001f)
-        {
-            transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotationSpeed);
-        }
+        characterController.Move(motion);
     }
 
     private void UpdateCurrentInteractable()
