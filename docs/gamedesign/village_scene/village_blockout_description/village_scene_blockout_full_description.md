@@ -85,7 +85,9 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 
 ---
 
-## 5. Beziehungsstatus-System (NPCs)
+## 5. Dorf Mechanics
+
+## 5.1 Beziehungsstatus-System (NPCs)
 
 ### Zustände
 - Gleichgültig  
@@ -100,6 +102,116 @@ Der Tageszyklus wird **rein atmosphärisch** vermittelt **KEIN** HUD.
 - Wohlgesonnen → Verwirrt / Gleichgültig
 - Reserviert → Verwirrt / Ablehnend
 - Ablehnend → Reserviert / Verwirrt
+
+---
+
+## 5.2 Dorf-Aktivitäten & Zeitfortschritt
+
+Im Dorf gibt es Aktivitäten, mit denen der Spieler bewusst Zeit verstreichen lassen kann.  
+Diese Aktivitäten dienen der **Charakterentwicklung**, **Beziehungsarbeit** und dem **Tageszyklus-Management**.
+
+Eine Aktivität:
+- Verändert Werte
+- Beeinflusst Beziehungen
+- Lässt die Zeit voranschreiten
+
+---
+
+### Aktivität: Training in der Kampfarena
+
+**Ort:** Kampfarena  
+**NPCs:** Gregory, Wachen  
+
+**Effekt:**
+- Stärke +1
+- Tageszeit:
+  - Morgen → Mittag
+  - Mittag → Abend
+
+**Beschreibung:**
+- Körperlich fordernd
+- Kurze Trainingssequenzen
+- Kein Dialog nötig oder sehr reduziert
+
+**Design-Ziel:**
+- Mechanische Verbesserung
+- Spiegelung von Gregorys Werten (Stärke)
+
+---
+
+### Aktivität: Arbeiten im Gasthaus
+
+**Ort:** Gasthaus  
+**NPCs:** Wirt, Reisende  
+
+**Effekt:**
+- Kleine Menge Geld
+- Tageszeit:
+  - Morgen → Mittag
+  - Mittag → Abend
+
+**Beschreibung:**
+- Tragen
+- Aufräumen
+- Bedienen
+
+**Design-Ziel:**
+- Gefühl von Alltag
+- Langsamer, ehrlicher Fortschritt
+
+---
+
+### Aktivität: Bücher lesen im Zimmer
+
+**Ort:** Zimmer (Schreibtisch)  
+
+**Effekt:**
+- Intelligenz +1
+- Tageszeit:
+  - Morgen → Mittag
+  - Mittag → Abend
+
+**Beschreibung:**
+- Ruhige Aktivität
+- Innerer Monolog
+- Lore-Fragment möglich
+
+**Design-Ziel:**
+- Charaktervertiefung
+- Verbindung zu Mila (indirekt)
+
+---
+
+### Aktivität: Langer Dialog mit Mila
+
+**Ort:** Dorf / Haus von Mila  
+
+**Effekt:**
+- Beziehungsstatus zu Mila verbessert sich
+- Tageszeit:
+  - Morgen → Mittag
+  - Mittag → Abend
+
+**Beschreibung:**
+- Ruhiger Dialog
+- Themen:
+  - Bücher
+  - Magie
+  - Geschichte
+
+**Design-Ziel:**
+- Soziale Progression
+- Vorbereitung auf Nebenquests
+
+---
+
+### System-Hinweis
+
+- Der Spieler entscheidet bewusst:
+  - *Was* er tut
+  - *Wann* die Zeit vergeht
+- Zeit ist eine Ressource
+- Nicht alle Aktivitäten sind an jedem Tagesabschnitt verfügbar
 
 ---
 
@@ -405,6 +517,126 @@ Fokus:
 ```
 
 Die Quest ist damit abgeschlossen und das Schwert kann nach einem Tageszyklus abgeholt werden.
+
+---
+
+## 7.1 Quest-Abzweigungen – Bertram Quest (Geldentscheidung)
+
+Nach der Übergabe des Geldes von Gregory erhält der Protagonist eine für ihn **große Menge Geld**.  
+An diesem Punkt öffnet sich eine bewusste Entscheidungsmöglichkeit, die **Charakterentwicklung**, **Beziehungen** und **zukünftige Spielverläufe** beeinflusst.
+
+Diese Abzweigungen sind **optional**, aber haben spürbare Konsequenzen.
+
+---
+
+### Ausgangspunkt
+
+- Der Spieler besitzt:
+  - Das Geld von Gregory
+- Bertra, besitzt:
+  - Das rostige Schwert
+- Ursprüngliches Quest-Ziel:
+  - Geld zu Bertram zurückbringen
+
+Ab hier ist der Spieler **nicht gezwungen**, Bertram sofort aufzusuchen.
+
+---
+
+### Abzweigung A: Geld zu Bertram bringen
+
+**Beschreibung:**
+- Der Spieler kehrt direkt zum Ausrüstungsladen zurück
+- Übergibt das Geld wie vereinbart
+
+**Konsequenzen:**
+- Quest wird regulär abgeschlossen
+- Bertram repariert das Schwert
+- Beziehungsstatus zu Bertram:
+  - Kann sich zu *Wohlgesonnen* entwickeln
+- Keine negativen Effekte
+
+**Charakterart:**
+- Pflichtbewusst  
+- Verlässlich  
+- Konfliktvermeidend  
+
+---
+
+### Abzweigung B: Geld verstecken
+
+**Beschreibung:**
+- Der Spieler kehrt nach Hause zurück
+- Versteckt das Geld unter dem Bett
+
+**Konsequenzen:**
+- Quest bleibt offen
+- Bertram wartet
+- Spätere Dialoge können sich verändern
+- Optional:
+  - Innerer Monolog über Angst, Sicherheit, Misstrauen
+
+**Charakterart:**
+- Unsicher  
+- Vorsichtig  
+- Misstrauisch gegenüber Autoritäten  
+
+---
+
+### Abzweigung C: Geld verschenken
+
+**Beschreibung:**
+- Der Spieler verschenkt Teile oder das gesamte Geld an zufällige Dorfbewohner
+
+**Mögliche Ziele:**
+- Einfache NPCs
+- Bedürftige Dorfbewohner
+- Händler oder Reisende
+
+**Konsequenzen:**
+- Beziehungsstatus zu einzelnen NPCs verbessert sich
+- Geld fehlt für Bertram
+- Bertram reagiert später ablehnend oder verärgert
+- Quest kann:
+  - Verzögert
+  - Teurer
+  - Oder nur teilweise abgeschlossen werden
+
+**Charakterart:**
+- Großzügig  
+- Idealistisch
+- Kurzsichtig oder bewusst selbstlos  
+
+---
+
+### Abzweigung D: Geld ausgeben
+
+**Beschreibung:**
+- Der Spieler nutzt das Geld für:
+  - Essen im Gasthaus
+  - Kleine Dienstleistungen
+  - Komfort
+
+**Konsequenzen:**
+- Temporäre Vorteile
+- Kein Geld für Bertram
+- Quest verzögert sich
+- Bertram reagiert negativ
+
+**Charakterart:**
+- Impulsiv  
+- Gegenwartsorientiert  
+- Konfliktscheu  
+
+---
+
+### Design-Hinweis
+
+- Keine Abzweigung ist „richtig“ oder „falsch“
+- Jede Entscheidung beeinflusst:
+  - Beziehungen
+  - Dialoge
+  - Spielerwahrnehmung der Welt
+- Konsequenzen treten **nicht sofort**, sondern **zeitversetzt** auf
 
 ---
 
