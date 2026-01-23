@@ -19,7 +19,7 @@ MonoBehaviour:
   - optionText: Ja
     next: {fileID: 0}
     outcomes:
-    - {fileID: 11400000, guid: e0bf7881afa5744889325e09552ef680, type: 2}
+    - {fileID: 11400000, guid: 0e327f4a634b24f20bde8a79e51b5cad, type: 2}
   - optionText: Nein
     next: {fileID: 11400000, guid: 18b139aed1aaf47f18ffc609c39c3276, type: 2}
     outcomes: []
