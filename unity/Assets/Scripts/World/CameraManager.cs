@@ -76,6 +76,4 @@ public class CameraManager : MonoBehaviour
         thirdPersonCam.Priority = third ? activePriority : inactivePriority;
         topDownCam.Priority = third ? inactivePriority : activePriority;
     }
-
-    private enum CameraMode { TopDown, ThirdPerson }
 }

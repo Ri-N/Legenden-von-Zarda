@@ -5,3 +5,5 @@ public enum PlayerArea
     Room,
     Village,
 }
+
+public enum CameraMode { TopDown, ThirdPerson }
