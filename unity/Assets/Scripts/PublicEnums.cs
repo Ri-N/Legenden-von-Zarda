@@ -7,3 +7,11 @@ public enum PlayerArea
 }
 
 public enum CameraMode { TopDown, ThirdPerson }
+
+public enum StoryTimePhase
+{
+    Morning,
+    Lunch,
+    Evening,
+    Night
+}
