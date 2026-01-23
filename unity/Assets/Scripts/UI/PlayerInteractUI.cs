@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerInteractUI : MonoBehaviour
 {
+    private void OnEnable()
+    {
+        if (UIController.Instance != null)
+            UIController.Instance.HideUIRequested += OnHideUIRequested;
+    }
+
     [SerializeField] private GameObject containerGameObject;
     [SerializeField] private TextMeshProUGUI interactText;
 
@@ -16,6 +22,8 @@ public class PlayerInteractUI : MonoBehaviour
     private RectTransform containerRect;
     private Canvas parentCanvas;
     private Camera uiCamera;
+
+    private bool suppressPrompt;
 
     private void Start()
     {
@@ -35,12 +43,27 @@ public class PlayerInteractUI : MonoBehaviour
             containerGameObject.SetActive(false);
     }
 
+    private void OnHideUIRequested(UIController.UIElement element, bool hide)
+    {
+        if (element != UIController.UIElement.All && element != UIController.UIElement.PlayerInteract)
+            return;
+
+        if (hide)
+            Hide();
+        else
+            Show();
+    }
+
     private void HandleChanged(IInteractable prev, IInteractable current)
     {
         currentInteractable = current;
 
-        containerGameObject.SetActive(currentInteractable != null);
-        if (currentInteractable != null)
+        if (containerGameObject == null)
+            return;
+
+        // When suppressed (e.g., during sleep), never show the prompt.
+        containerGameObject.SetActive(!suppressPrompt && currentInteractable != null);
+        if (!suppressPrompt && currentInteractable != null)
             interactText.SetText(currentInteractable.GetInteractText());
     }
 
@@ -48,6 +71,13 @@ public class PlayerInteractUI : MonoBehaviour
     {
         if (currentInteractable == null || containerRect == null || containerGameObject == null)
             return;
+
+        if (suppressPrompt)
+        {
+            if (containerGameObject != null && containerGameObject.activeSelf)
+                containerGameObject.SetActive(false);
+            return;
+        }
 
         if (uiCamera == null)
             uiCamera = Camera.main;
@@ -92,11 +122,35 @@ public class PlayerInteractUI : MonoBehaviour
 
     private void OnDisable()
     {
+        if (UIController.Instance != null)
+            UIController.Instance.HideUIRequested -= OnHideUIRequested;
+
         if (player != null)
             player.OnInteractableChanged -= HandleChanged;
 
         currentInteractable = null;
         if (containerGameObject != null)
             containerGameObject.SetActive(false);
+
+        suppressPrompt = false;
     }
+
+    private void Hide()
+    {
+        suppressPrompt = true;
+        if (containerGameObject != null)
+            containerGameObject.SetActive(false);
+    }
+
+    private void Show()
+    {
+        suppressPrompt = false;
+
+        if (containerGameObject != null)
+            containerGameObject.SetActive(currentInteractable != null);
+
+        if (currentInteractable != null)
+            interactText.SetText(currentInteractable.GetInteractText());
+    }
+
 }

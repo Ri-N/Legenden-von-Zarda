@@ -17,6 +17,10 @@ public class DialogueController : MonoBehaviour
     [SerializeField] private Transform choicesContainer;
     [SerializeField] private Button choiceButtonPrefab;
 
+    [Header("Visual Root")]
+    [Tooltip("Child object that contains the dialogue UI visuals. This will be hidden before outcomes execute.")]
+    [SerializeField] private GameObject visualRoot;
+
     [TextArea(5, 10)]
     private readonly Queue<string> paragraphs = new();
 
@@ -32,6 +36,8 @@ public class DialogueController : MonoBehaviour
     private bool awaitingChoice;
 
     private object currentInteractor;
+
+    private readonly List<DialogueOutcomeAction> pendingOutcomes = new();
 
 
     public void StartDialogue(DialogueText text, object interactor)
@@ -110,6 +116,11 @@ public class DialogueController : MonoBehaviour
             gameObject.SetActive(true);
         }
 
+        if (visualRoot != null && !visualRoot.activeSelf)
+        {
+            visualRoot.SetActive(true);
+        }
+
         nameText.text = dialogueText.speakerName;
 
         foreach (string paragraph in dialogueText.paragraphs)
@@ -122,18 +133,70 @@ public class DialogueController : MonoBehaviour
     {
         Player.Instance.SetCanMove(true);
 
+        // Capture interactor before clearing state.
+        object interactor = currentInteractor;
+
+        // Hide choice UI immediately.
         HideChoices();
+
+        // Hide the dialogue visuals (but keep this controller active).
+        if (visualRoot == null)
+        {
+            // Best-effort auto-detect: prefer first child as visuals container.
+            if (transform.childCount > 0)
+            {
+                visualRoot = transform.GetChild(0).gameObject;
+            }
+        }
+
+        if (visualRoot != null)
+        {
+            visualRoot.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("DialogueController: visualRoot is not assigned and could not be auto-detected. Outcomes will execute before the panel is disabled.", this);
+        }
+
         awaitingChoice = false;
         activeDialogue = null;
-        currentInteractor = null;
         paragraphs.Clear();
-
         conversationEnded = false;
 
-        if (gameObject.activeSelf)
+        // Run deferred outcomes after the UI has been hidden (next frame), then deactivate this panel.
+        StartCoroutine(EndConversationRoutine(interactor, visualRoot != null));
+    }
+
+    private IEnumerator EndConversationRoutine(object interactor, bool uiHidden)
+    {
+        // Wait one frame so the UI hide is actually rendered before side-effects happen.
+        if (uiHidden)
+            yield return null;
+
+        if (pendingOutcomes.Count > 0)
         {
-            gameObject.SetActive(false);
+            foreach (DialogueOutcomeAction outcome in pendingOutcomes)
+            {
+                if (outcome == null) continue;
+
+                try
+                {
+                    outcome.Execute(new DialogueOutcomeContext(interactor));
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogError($"DialogueController: Deferred outcome '{outcome.name}' threw an exception: {ex}", this);
+                }
+            }
+
+            pendingOutcomes.Clear();
         }
+
+        currentInteractor = null;
+
+        // Now we can disable the whole panel safely.
+        if (gameObject.activeSelf)
+            gameObject.SetActive(false);
     }
 
     private IEnumerator TypeDialogueText(string p)
@@ -225,21 +288,12 @@ public class DialogueController : MonoBehaviour
         HideChoices();
         awaitingChoice = false;
 
-        // Execute side-effects tied to this choice (optional)
         if (choice != null && choice.outcomes != null)
         {
             foreach (DialogueOutcomeAction outcome in choice.outcomes)
             {
                 if (outcome == null) continue;
-
-                try
-                {
-                    outcome.Execute(new DialogueOutcomeContext(currentInteractor));
-                }
-                catch (System.Exception ex)
-                {
-                    Debug.LogError($"DialogueController: Outcome '{outcome.name}' threw an exception: {ex}", this);
-                }
+                pendingOutcomes.Add(outcome);
             }
         }
 

@@ -1,9 +1,45 @@
+using System;
 using System.Collections;
 
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public static TimeManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+            Instance = null;
+    }
+
+    /// <summary>
+    /// Fired when a CycleUntilPhase operation starts.
+    /// </summary>
+    public event Action<StoryTimePhase> CycleStarted;
+
+    /// <summary>
+    /// Fired when a CycleUntilPhase operation ends.
+    /// reachedTarget == true means the cycle completed naturally by reaching the target.
+    /// reachedTarget == false means the cycle was interrupted/canceled.
+    /// </summary>
+    public event Action<bool> CycleEnded;
+
+    public bool IsCycling => cycleRoutine != null;
+
     [Header("Story Time")]
     [SerializeField] private StoryTimePhase startPhase = StoryTimePhase.Morning;
     [SerializeField] private float defaultTransitionSeconds = 10f;
@@ -39,15 +75,28 @@ public class TimeManager : MonoBehaviour
 
     public StoryTimePhase CurrentPhase { get; private set; }
 
-    [SerializeField] private EnvironmentController environment;
+    private EnvironmentController environment;
 
     private Coroutine skyboxRoutine;
     private Coroutine lightRoutine;
     private Coroutine sunRoutine;
     private Coroutine cycleRoutine;
 
+    private void StopActiveCycle(bool reachedTarget)
+    {
+        if (cycleRoutine != null)
+        {
+            StopCoroutine(cycleRoutine);
+            cycleRoutine = null;
+        }
+
+        CycleEnded?.Invoke(reachedTarget);
+    }
+
     private void Start()
     {
+        environment = EnvironmentController.Instance;
+
         if (environment == null)
         {
             Debug.LogError("TimeManager: EnvironmentController reference is missing.", this);
@@ -58,78 +107,45 @@ public class TimeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Calculates how long a CycleUntilPhase operation will take in seconds, based on the current phase,
+    /// the target phase, and the configured step duration.
+    /// </summary>
+    public float CalculateCycleUntilPhaseDuration(StoryTimePhase targetPhase, float? transitionSecondsPerStep = null)
+    {
+        float stepSeconds = transitionSecondsPerStep ?? defaultTransitionSeconds;
+        if (stepSeconds <= 0f)
+            return 0f;
+
+        int steps = CountPhaseSteps(CurrentPhase, targetPhase);
+        return steps * stepSeconds;
+    }
+
+    private static int CountPhaseSteps(StoryTimePhase from, StoryTimePhase to)
+    {
+        // Full cycle if already at the target.
+        if (from == to)
+            return 4;
+
+        int steps = 0;
+        StoryTimePhase cur = from;
+
+        // Safety guard: we only have 4 phases, so we should never need more than 4 steps.
+        while (cur != to && steps < 10)
+        {
+            cur = GetNextPhase(cur);
+            steps++;
+        }
+
+        return steps;
+    }
+
+    /// <summary>
     /// Story-driven time change. Transitions visuals, then holds the time until the next call.
-    /// </summary>
-    public void TriggerTimeTransition(StoryTimePhase targetPhase, float? transitionSeconds = null, bool cancelActiveCycle = true)
-    {
-        float time = transitionSeconds ?? defaultTransitionSeconds;
-        if (time <= 0f)
-        {
-            SetPhaseImmediate(targetPhase);
-            return;
-        }
-
-        if (targetPhase == CurrentPhase)
-            return;
-
-        // Stop ongoing transitions so we don't stack coroutines.
-        if (skyboxRoutine != null) StopCoroutine(skyboxRoutine);
-        if (lightRoutine != null) StopCoroutine(lightRoutine);
-        if (sunRoutine != null) StopCoroutine(sunRoutine);
-
-        if (cancelActiveCycle)
-        {
-            if (cycleRoutine != null) StopCoroutine(cycleRoutine);
-            cycleRoutine = null;
-        }
-
-        var from = environment != null ? environment.GetVisualsForPhase(CurrentPhase) : default;
-        var to = environment != null ? environment.GetVisualsForPhase(targetPhase) : default;
-
-        skyboxRoutine = StartCoroutine(RunSkyboxTransition(from.skybox, to.skybox, time));
-        lightRoutine = StartCoroutine(RunLightTransition(to.lightGradient, time));
-
-        // Lerp the sun direction to avoid snapping shadows/highlights.
-        int fromHours = Hours;
-        int fromMinutes = Minutes;
-        var toTime = GetClockForPhase(targetPhase);
-        sunRoutine = StartCoroutine(RunSunTransition(fromHours, fromMinutes, toTime.hours, toTime.minutes, time));
-
-        // Phase changes logically now; the clock is applied at the end of the sun lerp.
-        CurrentPhase = targetPhase;
-    }
-
-    /// <summary>
-    /// Instantly sets visuals and time to the given phase (no transition).
-    /// </summary>
-    public void SetPhaseImmediate(StoryTimePhase phase)
-    {
-        // Stop ongoing transitions.
-        if (skyboxRoutine != null) StopCoroutine(skyboxRoutine);
-        if (lightRoutine != null) StopCoroutine(lightRoutine);
-        if (sunRoutine != null) StopCoroutine(sunRoutine);
-        skyboxRoutine = null;
-        lightRoutine = null;
-        sunRoutine = null;
-        if (cycleRoutine != null) StopCoroutine(cycleRoutine);
-        cycleRoutine = null;
-
-        var v = environment != null ? environment.GetVisualsForPhase(phase) : default;
-        environment?.ApplySkyboxImmediate(v.skybox);
-        environment?.ApplyLightImmediate(v.lightGradient);
-
-        SetClockForPhase(phase);
-        CurrentPhase = phase;
-    }
-
-    /// <summary>
-    /// Advances the time phase step-by-step (wrapping around) until the target phase is reached.
-    /// Useful for "sleep until morning" or similar story beats.
     /// </summary>
     public void CycleUntilPhase(StoryTimePhase targetPhase, float? transitionSecondsPerStep = null)
     {
         if (cycleRoutine != null)
-            StopCoroutine(cycleRoutine);
+            StopActiveCycle(reachedTarget: false);
 
         float stepSeconds = transitionSecondsPerStep ?? defaultTransitionSeconds;
         if (stepSeconds <= 0f)
@@ -139,6 +155,7 @@ public class TimeManager : MonoBehaviour
             return;
         }
 
+        CycleStarted?.Invoke(targetPhase);
         cycleRoutine = StartCoroutine(CycleUntilPhaseRoutine(targetPhase, stepSeconds));
     }
 
@@ -179,6 +196,7 @@ public class TimeManager : MonoBehaviour
         }
 
         cycleRoutine = null;
+        CycleEnded?.Invoke(true);
     }
 
     private static (int hours, int minutes) GetClockForPhase(StoryTimePhase phase)
@@ -244,5 +262,67 @@ public class TimeManager : MonoBehaviour
 
         yield return environment.LerpLight(lightGradient, time);
         lightRoutine = null;
+    }
+
+    /// <summary>
+    /// Story-driven time change. Transitions visuals, then holds the time until the next call.
+    /// </summary>
+    public void TriggerTimeTransition(StoryTimePhase targetPhase, float? transitionSeconds = null, bool cancelActiveCycle = true)
+    {
+        float time = transitionSeconds ?? defaultTransitionSeconds;
+        if (time <= 0f)
+        {
+            SetPhaseImmediate(targetPhase);
+            return;
+        }
+
+        if (targetPhase == CurrentPhase)
+            return;
+
+        // Stop ongoing transitions so we don't stack coroutines.
+        if (skyboxRoutine != null) StopCoroutine(skyboxRoutine);
+        if (lightRoutine != null) StopCoroutine(lightRoutine);
+        if (sunRoutine != null) StopCoroutine(sunRoutine);
+
+        if (cancelActiveCycle && cycleRoutine != null)
+        {
+            StopActiveCycle(reachedTarget: false);
+        }
+
+        var from = environment != null ? environment.GetVisualsForPhase(CurrentPhase) : default;
+        var to = environment != null ? environment.GetVisualsForPhase(targetPhase) : default;
+
+        skyboxRoutine = StartCoroutine(RunSkyboxTransition(from.skybox, to.skybox, time));
+        lightRoutine = StartCoroutine(RunLightTransition(to.lightGradient, time));
+
+        int fromHours = Hours;
+        int fromMinutes = Minutes;
+        var toTime = GetClockForPhase(targetPhase);
+        sunRoutine = StartCoroutine(RunSunTransition(fromHours, fromMinutes, toTime.hours, toTime.minutes, time));
+
+        CurrentPhase = targetPhase;
+    }
+
+    /// <summary>
+    /// Instantly sets visuals and time to the given phase (no transition).
+    /// </summary>
+    public void SetPhaseImmediate(StoryTimePhase phase)
+    {
+        // Stop ongoing transitions.
+        if (skyboxRoutine != null) StopCoroutine(skyboxRoutine);
+        if (lightRoutine != null) StopCoroutine(lightRoutine);
+        if (sunRoutine != null) StopCoroutine(sunRoutine);
+        skyboxRoutine = null;
+        lightRoutine = null;
+        sunRoutine = null;
+        if (cycleRoutine != null)
+            StopActiveCycle(reachedTarget: false);
+
+        var v = environment != null ? environment.GetVisualsForPhase(phase) : default;
+        environment?.ApplySkyboxImmediate(v.skybox);
+        environment?.ApplyLightImmediate(v.lightGradient);
+
+        SetClockForPhase(phase);
+        CurrentPhase = phase;
     }
 }
