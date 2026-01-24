@@ -15,3 +15,28 @@ public enum StoryTimePhase
     Evening,
     Night
 }
+
+public enum ItemType
+{
+    Weapon,
+    Armor,
+    Consumable,
+    Quest,
+    Material,
+    Misc
+}
+
+public enum UIElement
+{
+    PlayerInteract,
+    Dialogue,
+    Inventory,
+    All
+}
+
+public enum BlockReason
+{
+    Inventory,
+    Dialogue,
+    Sleep
+}

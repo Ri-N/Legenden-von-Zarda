@@ -1,20 +1,72 @@
 using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
+    [Header("Game Input")]
+    [SerializeField] private GameInput gameInput;
+
     public static UIController Instance { get; private set; }
 
-    public enum UIElement
+    private readonly List<IUIElementController> registeredElements = new();
+
+    private readonly Dictionary<UIElement, bool> hiddenState = new();
+
+    private bool IsHidden(UIElement element)
     {
-        PlayerInteract,
-        Dialogue,
-        Inventory,
-        All
+        return !hiddenState.TryGetValue(element, out bool hidden) || hidden;
+    }
+
+    public void Register(IUIElementController element)
+    {
+        if (element == null) return;
+        if (!registeredElements.Contains(element))
+            registeredElements.Add(element);
+    }
+
+    public void Unregister(IUIElementController element)
+    {
+        if (element == null) return;
+        registeredElements.Remove(element);
+    }
+
+    private void ApplyHidden(UIElement element, bool hide)
+    {
+        // Apply to UI elements via interface
+        for (int i = 0; i < registeredElements.Count; i++)
+        {
+            var ui = registeredElements[i];
+            if (ui == null) continue;
+
+            if (element == UIElement.All || ui.Element == element)
+            {
+                ui.SetHidden(hide);
+
+                // Persist state for each affected element
+                hiddenState[ui.Element] = hide;
+            }
+        }
+
+        // Persist state for the specific element (unless it's a broadcast)
+        if (element != UIElement.All)
+            hiddenState[element] = hide;
+
+        // Optional/legacy event for non-UI listeners
+        HideUIRequested?.Invoke(element, hide);
+
+        // Inventory-specific high-level events
+        if (element == UIElement.Inventory)
+        {
+            if (hide) InventoryClosed?.Invoke();
+            else InventoryOpened?.Invoke();
+        }
     }
 
     public event Action<UIElement, bool> HideUIRequested;
+    public event Action InventoryOpened;
+    public event Action InventoryClosed;
 
     private void Awake()
     {
@@ -24,14 +76,29 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        if (gameInput == null)
+        {
+            Debug.LogError("[PlayerInventoryController] GameInput not set.", this);
+            enabled = false;
+            return;
+        }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        gameInput.OnOpenInventory += GameInput_OnOpenInventory;
     }
 
     private void OnDestroy()
     {
         if (Instance == this)
             Instance = null;
+
+        if (gameInput != null)
+            gameInput.OnOpenInventory -= GameInput_OnOpenInventory;
     }
 
     public static void RequestHide(UIElement element)
@@ -42,7 +109,7 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        Instance.HideUIRequested?.Invoke(element, true);
+        Instance.ApplyHidden(element, true);
     }
 
     public static void RequestShow(UIElement element)
@@ -53,7 +120,7 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        Instance.HideUIRequested?.Invoke(element, false);
+        Instance.ApplyHidden(element, false);
     }
 
     public static void RequestSetHidden(UIElement element, bool hide)
@@ -62,5 +129,11 @@ public class UIController : MonoBehaviour
             RequestHide(element);
         else
             RequestShow(element);
+    }
+
+    private void GameInput_OnOpenInventory(object sender, EventArgs e)
+    {
+        bool currentlyHidden = IsHidden(UIElement.Inventory);
+        RequestSetHidden(UIElement.Inventory, !currentlyHidden);
     }
 }
