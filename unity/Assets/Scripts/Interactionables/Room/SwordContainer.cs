@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionConstraint, IHasInventoryItem
+public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionConstraint, IHasInventoryItem, IConsumable
 {
     [Header("Inventory Reward")]
     [SerializeField] private ItemDefinition inventoryReward;
@@ -13,7 +13,12 @@ public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionCo
     [SerializeField] private PlayerArea[] allowedAreas;
 
     [SerializeField, Min(0)] private int dialogueIndex;
+    private bool isConsumed;
 
+    public void MarkConsumed()
+    {
+        isConsumed = true;
+    }
 
     public ItemDefinition ItemDefinition => inventoryReward;
     public int ItemAmount => itemAmount;
@@ -24,6 +29,9 @@ public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionCo
 
     public override void Interact()
     {
+        if (isConsumed)
+            return;
+
         DialogueText next = GetCurrentDialogue();
         if (next == null)
         {
@@ -42,14 +50,18 @@ public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionCo
 
     public bool CanInteract(in InteractionContext ctx)
     {
+        if (isConsumed)
+            return false;
+
         return InteractionConstraintUtil.IsAreaAllowed(allowedAreas, ctx.PlayerArea);
     }
     private DialogueText GetCurrentDialogue()
     {
-        if (dialogueSequence == null || dialogueSequence.Length == 0)
-        {
+        if (isConsumed)
             return null;
-        }
+
+        if (dialogueSequence == null || dialogueSequence.Length == 0)
+            return null;
 
         int idx = Mathf.Clamp(dialogueIndex, 0, dialogueSequence.Length - 1);
         return dialogueSequence[idx];
@@ -58,13 +70,8 @@ public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionCo
     private void AdvanceDialogueIndex()
     {
         if (dialogueSequence == null || dialogueSequence.Length == 0)
-        {
             return;
-        }
 
-        if (dialogueIndex < dialogueSequence.Length - 1)
-        {
-            dialogueIndex++;
-        }
+        dialogueIndex = Mathf.Min(dialogueIndex + 1, dialogueSequence.Length - 1);
     }
 }

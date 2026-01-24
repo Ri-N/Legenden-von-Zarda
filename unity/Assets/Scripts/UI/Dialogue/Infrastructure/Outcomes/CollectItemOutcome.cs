@@ -38,6 +38,9 @@ public class CollectItemOutcome : DialogueOutcomeAction
             return;
         }
 
+        if (ctx.Source is IConsumable consumable)
+            consumable.MarkConsumed();
+
         inventory.RefreshAll();
     }
 }
