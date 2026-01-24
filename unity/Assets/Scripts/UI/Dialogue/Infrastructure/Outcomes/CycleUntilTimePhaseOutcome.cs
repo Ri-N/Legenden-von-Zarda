@@ -7,7 +7,7 @@ public class CycleUntilTimePhaseOutcome : DialogueOutcomeAction
     [SerializeField] private float transitionSecondsPerStep = 10f;
 
     [Header("Sleep Blur")]
-    [SerializeField] private bool playSleepBlur = true;
+    [SerializeField] private bool playBlur = true;
     [SerializeField] private float blurFadeInSeconds = 0.6f;
     [SerializeField] private float blurFadeOutSeconds = 0.6f;
     [SerializeField, Range(0f, 1f)] private float blurPeakWeight = 1f;
@@ -53,7 +53,7 @@ public class CycleUntilTimePhaseOutcome : DialogueOutcomeAction
                 UIController.RequestShow(UIController.UIElement.PlayerInteract);
             }
 
-            if (playSleepBlur)
+            if (playBlur)
             {
                 environmentController.SetBlur(0f, blurFadeOutSeconds);
             }
@@ -61,7 +61,7 @@ public class CycleUntilTimePhaseOutcome : DialogueOutcomeAction
 
         timeManager.CycleEnded += Restore;
 
-        if (playSleepBlur)
+        if (playBlur)
         {
             environmentController.SetBlur(blurPeakWeight, blurFadeInSeconds);
         }
