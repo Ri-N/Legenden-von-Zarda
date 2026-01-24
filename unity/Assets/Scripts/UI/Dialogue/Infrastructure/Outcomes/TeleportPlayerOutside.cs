@@ -11,6 +11,6 @@ public class TeleportPlayerOutsideOutcome : DialogueOutcomeAction
             return;
         }
 
-        PlayerWorldState.Instance.RequestArea(PlayerArea.Village, ctx.Interactor);
+        PlayerWorldState.Instance.RequestArea(PlayerArea.Village, ctx.Source);
     }
 }

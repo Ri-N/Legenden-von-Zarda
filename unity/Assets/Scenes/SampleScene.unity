@@ -340,22 +340,38 @@ MonoBehaviour:
   canvasGroup: {fileID: 0}
   startHidden: 1
   slots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
+  - item: {fileID: 0}
+    amount: 0
   selectedIndex: -1
 --- !u!1 &221135052
 GameObject:
@@ -3376,7 +3392,7 @@ MonoBehaviour:
   uiTargets:
   - {fileID: 1543347271}
   - {fileID: 166804346}
-  logStateChanges: 1
+  logStateChanges: 0
 --- !u!4 &1123535046
 Transform:
   m_ObjectHideFlags: 0
@@ -4263,9 +4279,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4796d0c09b79428d9c0cced06c3d627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordContainer
+  inventoryReward: {fileID: 11400000, guid: 6cc5d4d03ef7c4a49a084fdf43d82726, type: 2}
+  itemAmount: 1
   dialogueController: {fileID: 1684878426}
-  dialogueText: {fileID: 11400000, guid: 29dce8114e85d43ef9cee06fd856e95f, type: 2}
+  dialogueSequence:
+  - {fileID: 11400000, guid: 29dce8114e85d43ef9cee06fd856e95f, type: 2}
+  - {fileID: 11400000, guid: cb647868f2c5c4fad996b621819da0f2, type: 2}
   allowedAreas: 00000000
+  dialogueIndex: 0
 --- !u!1 &1542037078
 GameObject:
   m_ObjectHideFlags: 0

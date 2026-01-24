@@ -2,8 +2,12 @@ using UnityEngine;
 
 public readonly struct DialogueOutcomeContext
 {
-    public readonly object Interactor;
-    public DialogueOutcomeContext(object interactor) => Interactor = interactor;
+    public readonly object Source;
+
+    public DialogueOutcomeContext(object source)
+    {
+        Source = source;
+    }
 }
 
 public abstract class DialogueOutcomeAction : ScriptableObject

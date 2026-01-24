@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerInventoryController : MonoBehaviour, IUIElementController, IBlockable
 {
+    public static PlayerInventoryController Instance { get; private set; }
+
     [Header("Grid Layout")]
     [Min(1)]
     [SerializeField] private int columns = 6;
@@ -14,7 +16,7 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
     [SerializeField] private int rows = 4;
 
     [Header("UI References")]
-    [Tooltip("Parent transform that has a GridLayoutGroup (recommended) where slots will be spawned.")]
+    [Tooltip("Parent transform that has a GridLayoutGroup where slots will be spawned.")]
     [SerializeField] private Transform gridParent;
 
     [SerializeField] private Slot slotPrefab;
@@ -25,8 +27,8 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
     [Header("Startup")]
     [SerializeField] private bool startHidden = true;
 
-    [Header("Inventory Data (temporary)")]
-    [Tooltip("One entry per slot index. For now this is a ScriptableObject reference. Later we will likely move to a runtime model.")]
+    [Header("Inventory Data (runtime)")]
+    [Tooltip("One entry per slot index (runtime state).")]
     [SerializeField] private InventoryEntry[] slots;
 
     [Header("Selection")]
@@ -82,6 +84,14 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
         if (gridParent == null)
         {
             Debug.LogError("[PlayerInventoryController] gridParent not set.", this);
@@ -164,8 +174,16 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        Instance = null;
+    }
+
     private void OnDestroy()
     {
+        if (Instance == this)
+            Instance = null;
+
         if (spawnedSlots == null) return;
 
         foreach (var slot in spawnedSlots)
@@ -223,7 +241,7 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
     }
 
     /// <summary>
-    /// Helper to set/replace an entry at runtime (useful for pickups).
+    /// Helper to set/replace an entry at runtime (useful for debugging/tests).
     /// </summary>
     public void SetEntry(int index, InventoryEntry entry)
     {
@@ -236,23 +254,49 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
     }
 
     /// <summary>
-    /// Finds the first empty slot and places the entry there. Returns false if full.
+    /// Adds an item with an explicit amount.
+    /// 1) Fills existing stacks of the same item
+    /// 2) Places remaining amount into empty slots
+    /// Returns false if not all items fit.
     /// </summary>
-    public bool TryAddToFirstEmpty(InventoryEntry entry)
+    public bool TryAddToFirstEmpty(ItemDefinition item, int amount)
     {
+        if (item == null) return false;
+        if (amount <= 0) return false;
+
         EnsureSlotArraySize();
 
-        for (int i = 0; i < slots.Length; i++)
+        int remaining = amount;
+
+        // 1) Fill existing stacks first
+        for (int i = 0; i < slots.Length && remaining > 0; i++)
         {
-            if (slots[i] == null || slots[i].IsEmpty)
-            {
-                slots[i] = entry;
-                RefreshSlot(i);
-                return true;
-            }
+            InventoryEntry e = slots[i];
+            if (e == null || e.IsEmpty) continue;
+            if (e.Item != item) continue;
+
+            remaining = e.Add(remaining);
+            RefreshSlot(i);
         }
 
-        return false;
+        // 2) Use empty slots
+        for (int i = 0; i < slots.Length && remaining > 0; i++)
+        {
+            InventoryEntry e = slots[i];
+            if (e != null && !e.IsEmpty) continue;
+
+            InventoryEntry newEntry = new InventoryEntry();
+            newEntry.Set(item, remaining);
+
+            // newEntry.Amount is clamped by max stack (inside InventoryEntry.Validate)
+            int placed = newEntry.Amount;
+            remaining -= placed;
+
+            slots[i] = newEntry;
+            RefreshSlot(i);
+        }
+
+        return remaining <= 0;
     }
 
     /// <summary>
