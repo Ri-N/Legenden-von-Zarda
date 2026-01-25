@@ -1,1 +1,4 @@
 sh scripts/validate-branch.sh
+
+dotnet tool restore
+dotnet format tools/formatting/ZardaFormatting.slnx --verify-no-changes
