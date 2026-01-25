@@ -10,16 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: DoorOutsideDialogue
+  m_Name: SwordContainer2
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: 
-  paragraphs:
-  - Willst du reingehen?
+  lines:
+  - speakerName: Du
+    text: Allein lassen bringt nichts.
+  - speakerName: Du
+    text: Mitnehmen auch nicht.
+  - speakerName: Entscheidung
+    text: Willst du das Schwert mitnehmen?
   choices:
   - optionText: Ja
     next: {fileID: 0}
     outcomes:
-    - {fileID: 11400000, guid: 0e327f4a634b24f20bde8a79e51b5cad, type: 2}
+    - {fileID: 11400000, guid: 08692d70ab1c943afb788d005b6aa70d, type: 2}
   - optionText: Nein
-    next: {fileID: 11400000, guid: 18b139aed1aaf47f18ffc609c39c3276, type: 2}
+    next: {fileID: 0}
     outcomes: []

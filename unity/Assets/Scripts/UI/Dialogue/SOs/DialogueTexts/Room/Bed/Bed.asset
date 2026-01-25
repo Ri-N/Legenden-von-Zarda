@@ -9,19 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: SwordContainer2
+  m_Script: {fileID: 11500000, guid: 6ab575437bb254555947d2d7fb11ecef, type: 3}
+  m_Name: Bed
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: Du
-  paragraphs:
-  - Allein lassen bringt nichts.
-  - Mitnehmen auch nicht.
-  - Willst du das Schwert mitnehmen?
+  lines:
+  - speakerName: Entscheidung
+    text: Willst du schlafen gehen?
   choices:
   - optionText: Ja
-    next: {fileID: 0}
+    next: {fileID: 11400000, guid: 6b277b6c309fe4ada999954642ab3c3e, type: 2}
     outcomes:
-    - {fileID: 11400000, guid: 08692d70ab1c943afb788d005b6aa70d, type: 2}
+    - {fileID: 11400000, guid: 97e6969a5640148df84310567c8d3b20, type: 2}
   - optionText: Nein
-    next: {fileID: 0}
+    next: {fileID: 11400000, guid: 2cd14d474aa8f449caa154b4052a0971, type: 2}
     outcomes: []

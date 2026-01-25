@@ -28,12 +28,12 @@ public class DialogueController : MonoBehaviour
     private bool isSubscribedToInteractAdvance;
     private int lastAdvanceFrame = -1;
 
-    [TextArea(5, 10)]
-    private readonly Queue<string> paragraphs = new();
+    private readonly Queue<DialogueText.DialogueLine> lines = new();
 
     private bool conversationEnded;
     private bool isTyping;
 
+    private DialogueText.DialogueLine currentLine;
     private string p;
     private Coroutine typeDialogueCoroutine;
     private const string HTML_ALPHA = "<color=#00000000>";
@@ -63,7 +63,7 @@ public class DialogueController : MonoBehaviour
 
         if (dialogueText != null)
         {
-            if (activeDialogue == null || conversationEnded || paragraphs.Count == 0)
+            if (activeDialogue == null || conversationEnded || lines.Count == 0)
             {
                 activeDialogue = dialogueText;
             }
@@ -74,7 +74,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        if (paragraphs.Count == 0)
+        if (lines.Count == 0)
         {
             if (!conversationEnded)
             {
@@ -89,7 +89,13 @@ public class DialogueController : MonoBehaviour
 
         if (!isTyping)
         {
-            p = paragraphs.Dequeue();
+            currentLine = lines.Dequeue();
+
+            // Update speaker per line (each paragraph may have a different speaker)
+            if (nameText != null)
+                nameText.text = currentLine.speakerName;
+
+            p = currentLine.text;
             typeDialogueCoroutine = StartCoroutine(TypeDialogueText(p));
         }
         else
@@ -97,7 +103,7 @@ public class DialogueController : MonoBehaviour
             FinishParagraphEarly();
         }
 
-        if (paragraphs.Count == 0)
+        if (lines.Count == 0)
         {
             if (activeDialogue.choices != null && activeDialogue.choices.Length > 0)
             {
@@ -171,11 +177,18 @@ public class DialogueController : MonoBehaviour
             visualRoot.SetActive(true);
         }
 
-        nameText.text = dialogueText.speakerName;
+        lines.Clear();
 
-        foreach (string paragraph in dialogueText.paragraphs)
+        if (dialogueText.lines == null || dialogueText.lines.Length == 0)
         {
-            paragraphs.Enqueue(paragraph);
+            Debug.LogWarning("DialogueController: DialogueText has no lines.", this);
+        }
+        else
+        {
+            foreach (DialogueText.DialogueLine line in dialogueText.lines)
+            {
+                lines.Enqueue(line);
+            }
         }
 
         SubscribeInteractAdvance();
@@ -211,7 +224,7 @@ public class DialogueController : MonoBehaviour
 
         awaitingChoice = false;
         activeDialogue = null;
-        paragraphs.Clear();
+        lines.Clear();
         conversationEnded = false;
 
         // Run deferred outcomes after the UI has been hidden (next frame), then deactivate this panel.
@@ -354,7 +367,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        paragraphs.Clear();
+        lines.Clear();
         conversationEnded = false;
         DisplayNextParagraph(choice.next);
     }

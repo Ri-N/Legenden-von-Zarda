@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab575437bb254555947d2d7fb11ecef, type: 3}
-  m_Name: Desk
+  m_Name: BedSleepNo
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: Du
-  paragraphs:
-  - Du betrachtest deinen Schreibtisch
-  - Das Buch von gestern liegt noch offen.
-  - "Ich wei\xDF nicht mal mehr, wann ich aufgeh\xF6rt habe zu lesen."
-  - "Der Tisch sieht aus, als h\xE4tte er den Kampf schon aufgegeben."
-  - Genau wie der Stuhl.
-  - "Aufr\xE4umen w\xE4re gut."
+  lines:
+  - speakerName: Du
+    text: Wenn ich jetzt wieder schlafe, wird morgen genauso.
+  - speakerName: Du
+    text: Und genau das will ich eigentlich nicht.
+  choices: []

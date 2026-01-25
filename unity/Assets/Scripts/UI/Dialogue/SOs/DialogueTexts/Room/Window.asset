@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab575437bb254555947d2d7fb11ecef, type: 3}
-  m_Name: BedSleepNo
+  m_Name: Window
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: Du
-  paragraphs:
-  - Wenn ich jetzt wieder schlafe, wird morgen genauso.
-  - Und genau das will ich eigentlich nicht.
+  lines:
+  - speakerName: "Erz\xE4hler"
+    text: "Du schaust hinaus auf die Hauptstra\xDFe"
+  - speakerName: Du
+    text: "H\xE4ndler. Viele davon."
+  - speakerName: Du
+    text: "Werd ich eines Tages dieses Dorf verlassen k\xF6nnen..."
   choices: []

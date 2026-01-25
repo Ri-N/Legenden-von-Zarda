@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab575437bb254555947d2d7fb11ecef, type: 3}
-  m_Name: Window
+  m_Name: BedSleepYes
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: Du
-  paragraphs:
-  - "Du schaust hinaus auf die Hauptstra\xDFe"
-  - "H\xE4ndler. Viele davon."
-  - "Werd ich eines Tages dieses Dorf verlassen k\xF6nnen..."
+  lines:
+  - speakerName: Du
+    text: Noch ein bisschen.
+  - speakerName: Du
+    text: Nur kurz.
+  - speakerName: "Erz\xE4hler"
+    text: Die Welt verblasst
+  - speakerName: "Erz\xE4hler"
+    text: Vielleicht wird morgen anders.
+  choices: []

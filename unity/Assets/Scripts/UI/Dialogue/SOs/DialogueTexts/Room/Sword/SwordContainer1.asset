@@ -10,11 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: DoorExitNo
+  m_Name: SwordContainer1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: Du
-  paragraphs:
-  - "Drau\xDFen ist es laut."
-  - Hier drin ist es ruhig.
-  - Zu ruhig.
+  lines:
+  - speakerName: "Erz\xE4hler"
+    text: Du blickst auf das Schwert
+  - speakerName: Du
+    text: Rost.
+  - speakerName: Du
+    text: Mehr Rost als Erinnerung.
+  - speakerName: Du
+    text: "Fr\xFCher war es schwer."
+  - speakerName: Du
+    text: "Jetzt f\xFChlt es sich nur noch m\xFCde an."
+  - speakerName: Du
+    text: "Vielleicht l\xE4sst sich noch etwas retten."
   choices: []

@@ -10,16 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: DoorInsideDialogue
+  m_Name: DoorExitNo
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
-  speakerName: 
-  paragraphs:
-  - Willst du rausgehen?
-  choices:
-  - optionText: Ja
-    next: {fileID: 0}
-    outcomes:
-    - {fileID: 11400000, guid: 2bb543c12178541d2857666d0b219757, type: 2}
-  - optionText: Nein
-    next: {fileID: 11400000, guid: f504ddc97c372432baadcb81f4c81a7d, type: 2}
-    outcomes: []
+  lines:
+  - speakerName: Du
+    text: "Drau\xDFen ist es laut."
+  - speakerName: Du
+    text: Hier drin ist es ruhig.
+  - speakerName: Du
+    text: Zu ruhig.
+  choices: []
