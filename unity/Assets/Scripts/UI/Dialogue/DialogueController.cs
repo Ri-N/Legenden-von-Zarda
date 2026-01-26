@@ -164,8 +164,6 @@ public class DialogueController : MonoBehaviour
         // Block gameplay while dialogue is active (movement, inventory, interact prompt, etc.)
         if (GameBlockController.Instance != null)
             GameBlockController.Instance.SetBlocked(BlockReason.Dialogue, true);
-        else if (Player.Instance != null)
-            Player.Instance.SetCanMove(false);
 
         if (!gameObject.activeSelf)
         {
