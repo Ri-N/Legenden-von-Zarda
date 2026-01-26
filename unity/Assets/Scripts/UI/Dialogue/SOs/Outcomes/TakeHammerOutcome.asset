@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad15366e107c145cc92c0f807369ed76, type: 3}
-  m_Name: TakeSwordOutcome
-  m_EditorClassIdentifier: Assembly-CSharp::TakeSwordOutcome
-  itemDefinition: {fileID: 11400000, guid: 6cc5d4d03ef7c4a49a084fdf43d82726, type: 2}
+  m_Name: TakeHammerOutcome
+  m_EditorClassIdentifier: Assembly-CSharp::CollectItemOutcome
+  itemDefinition: {fileID: 11400000, guid: b53f3b6151aa6457ea17f071ddc21318, type: 2}
   amount: 1

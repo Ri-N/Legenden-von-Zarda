@@ -3,6 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CollectItemOutcome", menuName = "Dialogue/Outcomes/CollectItemOutcome")]
 public class CollectItemOutcome : DialogueOutcomeAction
 {
+    [Header("Item to collect")]
+    [SerializeField] private ItemDefinition itemDefinition;
+
+    [Min(1)]
+    [SerializeField] private int amount = 1;
 
     public override void Execute(DialogueOutcomeContext ctx)
     {
@@ -13,28 +18,22 @@ public class CollectItemOutcome : DialogueOutcomeAction
             return;
         }
 
-        if (ctx.Source is not IHasInventoryItem hasItem)
+        if (itemDefinition == null)
         {
-            Debug.LogError($"[{nameof(CollectItemOutcome)}] Outcome requires ctx.Source to implement {nameof(IHasInventoryItem)}.", this);
+            Debug.LogError($"[{nameof(CollectItemOutcome)}] No {nameof(ItemDefinition)} assigned on this outcome asset.", this);
             return;
         }
 
-        if (hasItem.ItemDefinition == null)
+        if (amount <= 0)
         {
-            Debug.LogWarning($"[{nameof(CollectItemOutcome)}] Source provided a null {nameof(ItemDefinition)}.", this);
+            Debug.LogError($"[{nameof(CollectItemOutcome)}] Invalid amount '{amount}'. Amount must be >= 1.", this);
             return;
         }
 
-        if (hasItem.ItemAmount <= 0)
-        {
-            Debug.LogError($"[{nameof(CollectItemOutcome)}] Source provided an invalid Amount ({hasItem.ItemAmount}).", this);
-            return;
-        }
-
-        bool added = inventory.TryAddToFirstEmpty(hasItem.ItemDefinition, hasItem.ItemAmount);
+        bool added = inventory.TryAddToFirstEmpty(itemDefinition, amount);
         if (!added)
         {
-            Debug.LogWarning($"[{nameof(CollectItemOutcome)}] Inventory is full. Could not add '{hasItem.ItemDefinition.name}' x{hasItem.ItemAmount}.", this);
+            Debug.LogWarning($"[{nameof(CollectItemOutcome)}] Inventory is full. Could not add '{itemDefinition.name}' x{amount}.", this);
             return;
         }
 

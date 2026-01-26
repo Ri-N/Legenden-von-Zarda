@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NPCGregory : InteractableBase, IDialogueTrigger
+public class NPCBertram : InteractableBase, IDialogueTrigger
 {
     [SerializeField] private DialogueController dialogueController;
     [SerializeField] private DialogueText dialogueText;
