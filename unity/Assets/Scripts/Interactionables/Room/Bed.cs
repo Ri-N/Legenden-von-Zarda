@@ -1,26 +1,13 @@
 using UnityEngine;
 
-public class Bed : InteractableBase, IDialogueTrigger, IInteractionConstraint
+public class Bed : NPCBase, IInteractionConstraint
 {
-
-    [SerializeField] private DialogueController dialogueController;
-    [SerializeField] private DialogueText dialogueText;
-
+    [Header("Interaction Constraint")]
     [SerializeField] private PlayerArea[] allowedAreas;
 
-
-    public DialogueController DialogueController => dialogueController;
-    public DialogueText DialogueText => dialogueText;
-
-    public override void Interact()
-    {
-        TriggerDialogue(DialogueText);
-    }
-
-    public void TriggerDialogue(DialogueText dialogueText)
-    {
-        DialogueController.StartDialogue(dialogueText, this);
-    }
+    // NPCBase already implements InteractableBase + IDialogueTrigger and resolves dialogues via
+    // ConditionalDialogueSet / QuestDefinition / fallbackDialogue.
+    // Configure those fields on the Bed in the inspector.
 
     public bool CanInteract(in InteractionContext ctx)
     {

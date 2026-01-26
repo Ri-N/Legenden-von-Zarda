@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: BedSleepNo
+  m_Name: DT_Bertram_GiveMoney_No
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
   lines:
   - speakerName: Du
-    text: Wenn ich jetzt wieder schlafe, wird morgen genauso.
-  - speakerName: Du
-    text: Und genau das will ich eigentlich nicht.
+    text: Ich habe gerade keine Zeit.
+  - speakerName: "Erz\xE4hler"
+    text: "Bertram schaut dich m\xFCrrisch an."
+  - speakerName: Bertram
+    text: Na gut. Das will ich dir nochmal durchgehen lassen.
+  - speakerName: Bertram
+    text: "Aber beim n\xE4chsten Mal hast du es!"
   choices: []

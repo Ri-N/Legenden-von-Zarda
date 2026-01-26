@@ -10,11 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: BedSleepNo
+  m_Name: DT_Gregory_BringMoneyToBertram
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
   lines:
-  - speakerName: Du
-    text: Wenn ich jetzt wieder schlafe, wird morgen genauso.
-  - speakerName: Du
-    text: Und genau das will ich eigentlich nicht.
+  - speakerName: Gregory
+    text: Bring das Geld zu Bertram. Er wartet nicht gern.
   choices: []

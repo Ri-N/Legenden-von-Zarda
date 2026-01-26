@@ -32,6 +32,8 @@ MonoBehaviour:
     next: {fileID: 11400000, guid: 3da609383ec3d4bd4901ee0be2e0e44b, type: 2}
     outcomes:
     - {fileID: 11400000, guid: 7c8db45820aa44e26b37998c38f20e48, type: 2}
+    - {fileID: 11400000, guid: 2d40a2cd9b8714fdf9e6caee2c77721e, type: 2}
+    - {fileID: 11400000, guid: ec38d8fdd6e7646a69400386c03babee, type: 2}
   - optionText: Nein
     next: {fileID: 0}
     outcomes: []
