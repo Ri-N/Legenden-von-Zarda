@@ -142,7 +142,7 @@ public class NPCBase : MonoBehaviour, IDialogueTrigger, IInteractable
         return transform;
     }
 
-    public string GetInteractText()
+    public virtual string GetInteractText()
     {
         return "Sprechen";
     }

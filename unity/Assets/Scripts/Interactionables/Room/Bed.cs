@@ -13,4 +13,9 @@ public class Bed : NPCBase, IInteractionConstraint
     {
         return InteractionConstraintUtil.IsAreaAllowed(allowedAreas, ctx.PlayerArea);
     }
+
+    public override string GetInteractText()
+    {
+        return "Interagieren";
+    }
 }
