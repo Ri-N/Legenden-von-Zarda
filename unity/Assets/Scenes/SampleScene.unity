@@ -3961,6 +3961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameBlockController
   gameplayTargets:
   - {fileID: 874481429}
+  - {fileID: 1272434712}
   uiTargets:
   - {fileID: 1543347271}
   - {fileID: 166804346}
