@@ -6,6 +6,7 @@ public class GameInput : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
     public event EventHandler OnInteractAction;
+    public event EventHandler OnOpenInventory;
 
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
 
         playerInputActions.Player.Interact.performed += Interact_Performed;
+        playerInputActions.Player.OpenInventory.performed += OpenInventory_Performed;
     }
 
     public Vector2 GetMovementVectorNormalized()
@@ -23,5 +25,10 @@ public class GameInput : MonoBehaviour
     public void Interact_Performed(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
     {
         OnInteractAction?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void OpenInventory_Performed(UnityEngine.InputSystem.InputAction.CallbackContext callbackContext)
+    {
+        OnOpenInventory?.Invoke(this, EventArgs.Empty);
     }
 }

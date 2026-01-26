@@ -15,10 +15,14 @@ public class CycleUntilTimePhaseOutcome : DialogueOutcomeAction
     [Header("Player Lock")]
     [SerializeField] private bool lockPlayerDuringSleep = true;
 
+    [Tooltip("Which BlockReason should be applied while the time cycle runs (sleep/skip time).")]
+    [SerializeField] private BlockReason blockReason = BlockReason.Sleep;
+
     public override void Execute(DialogueOutcomeContext ctx)
     {
         TimeManager timeManager = TimeManager.Instance;
         EnvironmentController environmentController = EnvironmentController.Instance;
+        GameBlockController blockController = GameBlockController.Instance;
 
         if (timeManager == null)
         {
@@ -32,25 +36,22 @@ public class CycleUntilTimePhaseOutcome : DialogueOutcomeAction
             return;
         }
 
-
+        // This outcome is the “sleep start” notification point.
         if (lockPlayerDuringSleep)
         {
-            if (Player.Instance != null)
-                Player.Instance.SetCanMove(false);
-
-            UIController.RequestHide(UIController.UIElement.PlayerInteract);
+            if (blockController != null)
+                blockController.SetBlocked(blockReason, true);
         }
 
         void Restore(bool reachedTarget)
         {
             timeManager.CycleEnded -= Restore;
 
+            // This outcome is the “sleep end” notification point.
             if (lockPlayerDuringSleep)
             {
-                if (Player.Instance != null)
-                    Player.Instance.SetCanMove(true);
-
-                UIController.RequestShow(UIController.UIElement.PlayerInteract);
+                if (blockController != null)
+                    blockController.SetBlocked(blockReason, false);
             }
 
             if (playBlur)

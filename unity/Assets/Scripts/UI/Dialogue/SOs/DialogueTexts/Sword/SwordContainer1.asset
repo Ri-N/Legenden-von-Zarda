@@ -9,15 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ab575437bb254555947d2d7fb11ecef, type: 3}
-  m_Name: SwordContainer
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: SwordContainer1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
   speakerName: Du
   paragraphs:
-  - Du blickst auf das rostige Schwert
-  - Das ist alles, was von ihm geblieben ist.
-  - Nicht gerade heldenhaft.
-  - Aber ehrlich.
-  - "Vielleicht l\xE4sst sich noch etwas retten."
-  - Vom Schwert.
-  - Und vielleicht auch von mir.
+  - Du blickst auf das Schwert
+  - Rost.
+  - "Fr\xFCher war es schwer."
+  - "Jetzt f\xFChlt es sich nur noch m\xFCde an."
+  choices: []

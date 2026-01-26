@@ -3,12 +3,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerInteractUI : MonoBehaviour
+public class PlayerInteractUI : MonoBehaviour, IUIElementController, IBlockable
 {
+    private bool isHidden;
+    private bool isBlocked;
+
+    private bool SuppressPrompt => isHidden || isBlocked;
+
     private void OnEnable()
     {
         if (UIController.Instance != null)
-            UIController.Instance.HideUIRequested += OnHideUIRequested;
+        {
+            UIController.Instance.Register(this);
+        }
     }
 
     [SerializeField] private GameObject containerGameObject;
@@ -23,7 +30,19 @@ public class PlayerInteractUI : MonoBehaviour
     private Canvas parentCanvas;
     private Camera uiCamera;
 
-    private bool suppressPrompt;
+    public UIElement Element => UIElement.PlayerInteract;
+
+    /// <summary>
+    /// Called by UIController to show/hide this UI element.
+    /// IMPORTANT: Do not disable this GameObject, otherwise it can't receive further UI requests.
+    /// </summary>
+    public void SetHidden(bool hidden)
+    {
+        if (hidden)
+            Hide();
+        else
+            Show();
+    }
 
     private void Start()
     {
@@ -43,17 +62,6 @@ public class PlayerInteractUI : MonoBehaviour
             containerGameObject.SetActive(false);
     }
 
-    private void OnHideUIRequested(UIController.UIElement element, bool hide)
-    {
-        if (element != UIController.UIElement.All && element != UIController.UIElement.PlayerInteract)
-            return;
-
-        if (hide)
-            Hide();
-        else
-            Show();
-    }
-
     private void HandleChanged(IInteractable prev, IInteractable current)
     {
         currentInteractable = current;
@@ -61,9 +69,9 @@ public class PlayerInteractUI : MonoBehaviour
         if (containerGameObject == null)
             return;
 
-        // When suppressed (e.g., during sleep), never show the prompt.
-        containerGameObject.SetActive(!suppressPrompt && currentInteractable != null);
-        if (!suppressPrompt && currentInteractable != null)
+        // When suppressed (e.g., during sleep or blocked), never show the prompt.
+        containerGameObject.SetActive(!SuppressPrompt && currentInteractable != null);
+        if (!SuppressPrompt && currentInteractable != null)
             interactText.SetText(currentInteractable.GetInteractText());
     }
 
@@ -72,7 +80,7 @@ public class PlayerInteractUI : MonoBehaviour
         if (currentInteractable == null || containerRect == null || containerGameObject == null)
             return;
 
-        if (suppressPrompt)
+        if (SuppressPrompt)
         {
             if (containerGameObject != null && containerGameObject.activeSelf)
                 containerGameObject.SetActive(false);
@@ -123,7 +131,9 @@ public class PlayerInteractUI : MonoBehaviour
     private void OnDisable()
     {
         if (UIController.Instance != null)
-            UIController.Instance.HideUIRequested -= OnHideUIRequested;
+        {
+            UIController.Instance.Unregister(this);
+        }
 
         if (player != null)
             player.OnInteractableChanged -= HandleChanged;
@@ -132,19 +142,38 @@ public class PlayerInteractUI : MonoBehaviour
         if (containerGameObject != null)
             containerGameObject.SetActive(false);
 
-        suppressPrompt = false;
+        isHidden = false;
+        isBlocked = false;
     }
 
     private void Hide()
     {
-        suppressPrompt = true;
+        isHidden = true;
         if (containerGameObject != null)
             containerGameObject.SetActive(false);
     }
 
     private void Show()
     {
-        suppressPrompt = false;
+        isHidden = false;
+
+        if (containerGameObject != null)
+            containerGameObject.SetActive(currentInteractable != null && !SuppressPrompt);
+
+        if (currentInteractable != null && !SuppressPrompt)
+            interactText.SetText(currentInteractable.GetInteractText());
+    }
+
+    public void SetBlocked(bool blocked)
+    {
+        isBlocked = blocked;
+
+        if (SuppressPrompt)
+        {
+            if (containerGameObject != null)
+                containerGameObject.SetActive(false);
+            return;
+        }
 
         if (containerGameObject != null)
             containerGameObject.SetActive(currentInteractable != null);
@@ -152,5 +181,4 @@ public class PlayerInteractUI : MonoBehaviour
         if (currentInteractable != null)
             interactText.SetText(currentInteractable.GetInteractText());
     }
-
 }

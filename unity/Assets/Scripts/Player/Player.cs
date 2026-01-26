@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IBlockable
 {
     public static Player Instance { get; private set; }
     private CharacterController characterController;
@@ -218,6 +218,10 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
+        // When blocked, ignore interaction input entirely.
+        if (!canMove)
+            return;
+
         IInteractable interactable = GetInteractableObject();
         interactable?.Interact();
     }
@@ -225,6 +229,16 @@ public class Player : MonoBehaviour
     public void SetCanMove(bool canMove)
     {
         this.canMove = canMove;
+    }
+
+    public void SetBlocked(bool blocked)
+    {
+        SetCanMove(!blocked);
+
+        if (blocked)
+        {
+            SetCurrentInteractable(null);
+        }
     }
 
     private void OnAreaChanged(PlayerArea newArea, PlayerAreaContext ctx)

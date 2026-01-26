@@ -21,6 +21,13 @@ public class DialogueController : MonoBehaviour
     [Tooltip("Child object that contains the dialogue UI visuals. This will be hidden before outcomes execute.")]
     [SerializeField] private GameObject visualRoot;
 
+    [Header("Input")]
+    [Tooltip("Optional. If not set, will try to find GameInput at runtime.")]
+    [SerializeField] private GameInput gameInput;
+
+    private bool isSubscribedToInteractAdvance;
+    private int lastAdvanceFrame = -1;
+
     [TextArea(5, 10)]
     private readonly Queue<string> paragraphs = new();
 
@@ -104,13 +111,56 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    private void SubscribeInteractAdvance()
+    {
+        if (gameInput == null)
+        {
+            Debug.LogError("[DialogueController] GameInput is missing.");
+            return;
+        }
+
+        gameInput.OnInteractAction -= OnInteractAdvance;
+        gameInput.OnInteractAction += OnInteractAdvance;
+        isSubscribedToInteractAdvance = true;
+    }
+
+    private void UnsubscribeInteractAdvance()
+    {
+        if (!isSubscribedToInteractAdvance) return;
+
+        if (gameInput != null)
+            gameInput.OnInteractAction -= OnInteractAdvance;
+
+        isSubscribedToInteractAdvance = false;
+    }
+
+    private void OnInteractAdvance(object sender, System.EventArgs e)
+    {
+        // Debounce: if multiple systems fire in the same frame, do not double-advance.
+        if (lastAdvanceFrame == Time.frameCount)
+            return;
+        lastAdvanceFrame = Time.frameCount;
+
+        // Only advance if dialogue is currently active/visible.
+        if (!gameObject.activeInHierarchy) return;
+        if (activeDialogue == null) return;
+        if (visualRoot != null && !visualRoot.activeSelf) return;
+
+        DisplayNextParagraph(null);
+    }
+
     private void StartConversation(DialogueText dialogueText)
     {
         HideChoices();
         awaitingChoice = false;
         activeDialogue = dialogueText;
 
-        Player.Instance.SetCanMove(false);
+        // Block gameplay while dialogue is active (movement, inventory, interact prompt, etc.)
+        if (GameBlockController.Instance != null)
+            GameBlockController.Instance.SetBlocked(BlockReason.Dialogue, true);
+        else if (Player.Instance != null)
+            Player.Instance.SetCanMove(false);
+
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
@@ -127,22 +177,23 @@ public class DialogueController : MonoBehaviour
         {
             paragraphs.Enqueue(paragraph);
         }
+
+        SubscribeInteractAdvance();
     }
 
     private void EndConversation()
     {
-        Player.Instance.SetCanMove(true);
+        UnsubscribeInteractAdvance();
 
-        // Capture interactor before clearing state.
+        if (GameBlockController.Instance != null)
+            GameBlockController.Instance.SetBlocked(BlockReason.Dialogue, false);
+
         object interactor = currentInteractor;
 
-        // Hide choice UI immediately.
         HideChoices();
 
-        // Hide the dialogue visuals (but keep this controller active).
         if (visualRoot == null)
         {
-            // Best-effort auto-detect: prefer first child as visuals container.
             if (transform.childCount > 0)
             {
                 visualRoot = transform.GetChild(0).gameObject;
@@ -306,5 +357,10 @@ public class DialogueController : MonoBehaviour
         paragraphs.Clear();
         conversationEnded = false;
         DisplayNextParagraph(choice.next);
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeInteractAdvance();
     }
 }
