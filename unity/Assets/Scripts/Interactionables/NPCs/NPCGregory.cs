@@ -1,21 +1,10 @@
 using UnityEngine;
 
-public class NPCGregory : InteractableBase, IDialogueTrigger
+public class NPCGregory : NPCBase
 {
-    [SerializeField] private DialogueController dialogueController;
-    [SerializeField] private DialogueText dialogueText;
+    // Gregory currently uses the base quest-driven dialogue routing.
+    // Configure dialogueSet / questDefinition / fallbackDialogue on the prefab/scene.
 
-    public DialogueController DialogueController => dialogueController;
-
-    public DialogueText DialogueText => dialogueText;
-
-    public override void Interact()
-    {
-        TriggerDialogue(dialogueText);
-    }
-
-    public void TriggerDialogue(DialogueText dialogueText)
-    {
-        DialogueController.StartDialogue(dialogueText, this);
-    }
+    // If later you want Gregory to be completely non-interactable before a quest step,
+    // you can override CanInteract() here.
 }

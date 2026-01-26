@@ -1,21 +1,7 @@
 using UnityEngine;
 
-public class NPCBertram : InteractableBase, IDialogueTrigger
+public class NPCBertram : NPCBase
 {
-    [SerializeField] private DialogueController dialogueController;
-    [SerializeField] private DialogueText dialogueText;
-
-    public DialogueController DialogueController => dialogueController;
-
-    public DialogueText DialogueText => dialogueText;
-
-    public override void Interact()
-    {
-        TriggerDialogue(dialogueText);
-    }
-
-    public void TriggerDialogue(DialogueText dialogueText)
-    {
-        DialogueController.StartDialogue(dialogueText, this);
-    }
+    // Bertram currently uses the base quest-driven dialogue routing.
+    // Configure dialogueSet / questDefinition / fallbackDialogue on the prefab/scene.
 }

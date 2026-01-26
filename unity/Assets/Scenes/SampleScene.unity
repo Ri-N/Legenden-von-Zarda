@@ -1713,7 +1713,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCBertram
   dialogueController: {fileID: 1684878426}
-  dialogueText: {fileID: 11400000, guid: 60bb9f0e5c89b4097ba27ffd6c24c97b, type: 2}
+  fallbackDialogue: {fileID: 11400000, guid: d5f9ab7e0d88846f7ab493b1b5370e6c, type: 2}
+  dialogueSet: {fileID: 11400000, guid: b8a03d9cc631d48ff9f3d1ac38b180d2, type: 2}
+  questDefinition: {fileID: 11400000, guid: 4c04906ee46ca44e1b37725db5b85a62, type: 2}
+  blockIfNoDialogue: 1
+  enforceCanInteract: 1
 --- !u!136 &591576698
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3992,7 +3996,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCGregory
   dialogueController: {fileID: 1684878426}
-  dialogueText: {fileID: 11400000, guid: f2e9f1438bb6446c4a390930d151e663, type: 2}
+  fallbackDialogue: {fileID: 11400000, guid: c33ac67846bfa496eae24b1ded5ab389, type: 2}
+  dialogueSet: {fileID: 11400000, guid: 816f4b5d1e3ea4dbdaf2022288fcf841, type: 2}
+  questDefinition: {fileID: 11400000, guid: 4c04906ee46ca44e1b37725db5b85a62, type: 2}
+  blockIfNoDialogue: 1
+  enforceCanInteract: 1
 --- !u!136 &1365289488
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4476,6 +4484,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1425114305}
   m_CullTransparentMesh: 1
+--- !u!1 &1471823678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1471823680}
+  - component: {fileID: 1471823679}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1471823679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471823678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3d17353299c4ac69298365c080a2e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestLog
+  questDefinitions:
+  - {fileID: 11400000, guid: 4c04906ee46ca44e1b37725db5b85a62, type: 2}
+  runtime: []
+--- !u!4 &1471823680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471823678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490685502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5646,3 +5701,4 @@ SceneRoots:
   - {fileID: 1637409834}
   - {fileID: 1123535046}
   - {fileID: 539339125}
+  - {fileID: 1471823680}

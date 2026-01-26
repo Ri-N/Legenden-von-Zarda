@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
-  m_Name: Bertram
+  m_Name: DT_Bertram_QuestOffer
   m_EditorClassIdentifier: Assembly-CSharp::DialogueText
   lines:
   - speakerName: "Erz\xE4hler"
@@ -54,6 +54,7 @@ MonoBehaviour:
     next: {fileID: 0}
     outcomes:
     - {fileID: 11400000, guid: 1b4356a06ae0b4052ac2b4f367f1c338, type: 2}
+    - {fileID: 11400000, guid: 7f6bd9b911d424b6fa3b9ba5b85d6bab, type: 2}
   - optionText: Nein
     next: {fileID: 0}
     outcomes: []
