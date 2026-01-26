@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionConstraint, IHasInventoryItem, IConsumable
+public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionConstraint, IConsumable
 {
-    [Header("Inventory Reward")]
-    [SerializeField] private ItemDefinition inventoryReward;
-    [SerializeField] private int itemAmount;
 
     [SerializeField] private DialogueController dialogueController;
 
@@ -19,9 +16,6 @@ public class SwordContainer : InteractableBase, IDialogueTrigger, IInteractionCo
     {
         isConsumed = true;
     }
-
-    public ItemDefinition ItemDefinition => inventoryReward;
-    public int ItemAmount => itemAmount;
 
     public DialogueController DialogueController => dialogueController;
 

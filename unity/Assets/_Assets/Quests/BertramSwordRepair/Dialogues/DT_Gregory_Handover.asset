@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: DT_Gregory_Handover
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueText
+  lines:
+  - speakerName: "Erz\xE4hler"
+    text: Du stellst das Objekt ab
+  - speakerName: "Erz\xE4hler"
+    text: Von Bertram.
+  - speakerName: "Erz\xE4hler"
+    text: Gregory mustert dich
+  - speakerName: Gregory
+    text: Schwer genug.
+  - speakerName: Gregory
+    text: "Er h\xE4tte selbst kommen k\xF6nnen."
+  - speakerName: Gregory
+    text: Aber er schickt lieber andere.
+  - speakerName: Entscheidung
+    text: "Willst du den Hammer \xFCbergeben?"
+  choices:
+  - optionText: Ja
+    next: {fileID: 11400000, guid: 3da609383ec3d4bd4901ee0be2e0e44b, type: 2}
+    outcomes:
+    - {fileID: 11400000, guid: 7c8db45820aa44e26b37998c38f20e48, type: 2}
+    - {fileID: 11400000, guid: 2d40a2cd9b8714fdf9e6caee2c77721e, type: 2}
+    - {fileID: 11400000, guid: ec38d8fdd6e7646a69400386c03babee, type: 2}
+  - optionText: Nein
+    next: {fileID: 0}
+    outcomes: []

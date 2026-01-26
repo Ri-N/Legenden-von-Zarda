@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: DT_Bertram_AskForMoney
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueText
+  lines:
+  - speakerName: Bertram
+    text: Wo ist mein Geld?
+  - speakerName: Entscheidung
+    text: Willst du Bertram sein Geld geben?
+  choices:
+  - optionText: Ja
+    next: {fileID: 11400000, guid: 005efa18997a74e9e8f70a5542b0fb4c, type: 2}
+    outcomes:
+    - {fileID: 11400000, guid: ea78f3b63167543c8b9eee5ac6ef30a0, type: 2}
+    - {fileID: 11400000, guid: 4bc72ab3d96e24d3b8fb6d933288bc93, type: 2}
+    - {fileID: 11400000, guid: 01b511c82f3c6433e8f758dfb8a5e3de, type: 2}
+    - {fileID: 11400000, guid: e734e37ccc1e24786ba8010855d96476, type: 2}
+  - optionText: Nein
+    next: {fileID: 11400000, guid: ed115af281d3a4cae802837ece7506ad, type: 2}
+    outcomes: []

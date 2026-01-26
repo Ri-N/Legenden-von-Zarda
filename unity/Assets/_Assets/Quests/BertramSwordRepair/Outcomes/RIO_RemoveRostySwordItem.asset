@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba1df78b9d8443aea47be95aeb37e19, type: 3}
+  m_Name: RIO_RemoveRostySwordItem
+  m_EditorClassIdentifier: Assembly-CSharp::RemoveItemOutcome
+  itemDefinition: {fileID: 11400000, guid: 6cc5d4d03ef7c4a49a084fdf43d82726, type: 2}
+  amount: 1
+  requireFullAmount: 1

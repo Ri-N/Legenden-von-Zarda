@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: DT_Bertram_QuestOffer
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueText
+  lines:
+  - speakerName: "Erz\xE4hler"
+    text: Du legst das Schwert auf den Tresen
+  - speakerName: Du
+    text: Es war mal besser.
+  - speakerName: "Erz\xE4hler"
+    text: Bertram betrachtet die Klinge
+  - speakerName: Bertram
+    text: Hm.
+  - speakerName: Bertram
+    text: War?
+  - speakerName: Bertram
+    text: Das Ding wurde lange nicht gepflegt.
+  - speakerName: Bertram
+    text: Und lange nicht benutzt.
+  - speakerName: "Erz\xE4hler"
+    text: "Bertram lehnt sich zur\xFCck"
+  - speakerName: Bertram
+    text: Ich kann es richten.
+  - speakerName: Bertram
+    text: Aber nicht umsonst.
+  - speakerName: Bertram
+    text: Bring Gregory das hier.
+  - speakerName: Bertram
+    text: Schwer.
+  - speakerName: Bertram
+    text: Unhandlich.
+  - speakerName: Bertram
+    text: Er schuldet mir noch etwas.
+  - speakerName: Bertram
+    text: Du bringst es ihm.
+  - speakerName: Bertram
+    text: Ich repariere das Schwert.
+  - speakerName: Du zu dir
+    text: "Nat\xFCrlich schuldet jemand Bertram etwas."
+  - speakerName: Entscheidung
+    text: 'Willst du den Hammer nehmen? '
+  choices:
+  - optionText: Ja
+    next: {fileID: 0}
+    outcomes:
+    - {fileID: 11400000, guid: 1b4356a06ae0b4052ac2b4f367f1c338, type: 2}
+    - {fileID: 11400000, guid: 7f6bd9b911d424b6fa3b9ba5b85d6bab, type: 2}
+  - optionText: Nein
+    next: {fileID: 0}
+    outcomes: []
