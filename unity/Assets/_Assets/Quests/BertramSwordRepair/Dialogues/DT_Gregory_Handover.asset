@@ -25,12 +25,13 @@ MonoBehaviour:
     text: "Er h\xE4tte selbst kommen k\xF6nnen."
   - speakerName: Gregory
     text: Aber er schickt lieber andere.
-  - speakerName: "Erz\xE4hler"
-    text: Gregory reicht dir das Geld
-  - speakerName: Gregory
-    text: Das ist alles.
-  - speakerName: Du
-    text: Spricht nicht viel.
-  - speakerName: Du
-    text: Passt zur Arena.
-  choices: []
+  - speakerName: Entscheidung
+    text: "Willst du den Hammer \xFCbergeben?"
+  choices:
+  - optionText: Ja
+    next: {fileID: 11400000, guid: 3da609383ec3d4bd4901ee0be2e0e44b, type: 2}
+    outcomes:
+    - {fileID: 11400000, guid: 7c8db45820aa44e26b37998c38f20e48, type: 2}
+  - optionText: Nein
+    next: {fileID: 0}
+    outcomes: []

@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23924526e4aa34eaaba103b370b33e20, type: 3}
-  m_Name: SQSA_DeliverHeavyToGregory
-  m_EditorClassIdentifier: Assembly-CSharp::SetQuestStepAction
+  m_Script: {fileID: 11500000, guid: 40bfedd8f88bc4823bdadefbc35c2342, type: 3}
+  m_Name: SQO_Start_RepairSword
+  m_EditorClassIdentifier: Assembly-CSharp::StartQuestOutcome
   questDefinition: {fileID: 11400000, guid: 4c04906ee46ca44e1b37725db5b85a62, type: 2}
   questIdOverride: 
-  stepId: S8_DeliverHeavyToGregory
-  runEnterActions: 1
-  evaluateAfter: 1
+  allowIfAlreadyStarted: 1

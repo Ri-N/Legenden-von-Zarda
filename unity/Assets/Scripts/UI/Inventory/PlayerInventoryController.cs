@@ -300,6 +300,89 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
     }
 
     /// <summary>
+    /// Removes up to <paramref name="amount"/> items from the inventory.
+    /// Returns how many items were actually removed.
+    /// </summary>
+    public int RemoveUpTo(ItemDefinition item, int amount)
+    {
+        if (item == null) return 0;
+        if (amount <= 0) return 0;
+
+        EnsureSlotArraySize();
+
+        int remaining = amount;
+
+        for (int i = 0; i < slots.Length && remaining > 0; i++)
+        {
+            InventoryEntry e = slots[i];
+            if (e == null || e.IsEmpty) continue;
+            if (e.Item != item) continue;
+
+            int take = Mathf.Min(e.Amount, remaining);
+            int newAmount = e.Amount - take;
+            remaining -= take;
+
+            if (newAmount <= 0)
+            {
+                // Mark slot empty
+                slots[i] = null;
+            }
+            else
+            {
+                // Re-apply to ensure clamping/validation stays consistent
+                e.Set(item, newAmount);
+                slots[i] = e;
+            }
+
+            RefreshSlot(i);
+        }
+
+        return amount - remaining;
+    }
+
+    /// <summary>
+    /// Tries to remove items from the inventory.
+    /// If <paramref name="requireFullAmount"/> is true, this only succeeds if the full amount is available.
+    /// </summary>
+    public bool TryRemove(ItemDefinition item, int amount, bool requireFullAmount = true)
+    {
+        if (item == null) return false;
+        if (amount <= 0) return false;
+
+        if (requireFullAmount)
+        {
+            int available = Count(item);
+            if (available < amount)
+                return false;
+        }
+
+        RemoveUpTo(item, amount);
+        return true;
+    }
+
+    /// <summary>
+    /// Counts how many items of the given type are currently in the inventory.
+    /// </summary>
+    public int Count(ItemDefinition item)
+    {
+        if (item == null) return 0;
+
+        EnsureSlotArraySize();
+
+        int total = 0;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            InventoryEntry e = slots[i];
+            if (e == null || e.IsEmpty) continue;
+            if (e.Item != item) continue;
+
+            total += e.Amount;
+        }
+
+        return total;
+    }
+
+    /// <summary>
     /// Called by UIController to show/hide this UI element.
     /// IMPORTANT: Do not disable the GameObject here; otherwise it can't receive show requests.
     /// </summary>
