@@ -32,3 +32,7 @@ MonoBehaviour:
   - optionText: Nein
     next: {fileID: 0}
     outcomes: []
+  - optionText: Schlafen
+    next: {fileID: 0}
+    outcomes:
+    - {fileID: 11400000, guid: 97e6969a5640148df84310567c8d3b20, type: 2}
