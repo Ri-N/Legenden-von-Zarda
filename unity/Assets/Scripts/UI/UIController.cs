@@ -62,11 +62,20 @@ public class UIController : MonoBehaviour
             if (hide) InventoryClosed?.Invoke();
             else InventoryOpened?.Invoke();
         }
+
+        // Menu-specific high-level events
+        if (element == UIElement.Menu)
+        {
+            if (hide) MenuClosed?.Invoke();
+            else MenuOpened?.Invoke();
+        }
     }
 
     public event Action<UIElement, bool> HideUIRequested;
     public event Action InventoryOpened;
     public event Action InventoryClosed;
+    public event Action MenuOpened;
+    public event Action MenuClosed;
 
     private void Awake()
     {
@@ -78,7 +87,7 @@ public class UIController : MonoBehaviour
 
         if (gameInput == null)
         {
-            Debug.LogError("[PlayerInventoryController] GameInput not set.", this);
+            Debug.LogError("[UIController] GameInput not set.", this);
             enabled = false;
             return;
         }
@@ -90,6 +99,7 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         gameInput.OnOpenInventory += GameInput_OnOpenInventory;
+        gameInput.OnOpenMenu += GameInput_OnOpenMenu;
     }
 
     private void OnDestroy()
@@ -98,7 +108,10 @@ public class UIController : MonoBehaviour
             Instance = null;
 
         if (gameInput != null)
+        {
             gameInput.OnOpenInventory -= GameInput_OnOpenInventory;
+            gameInput.OnOpenMenu -= GameInput_OnOpenMenu;
+        }
     }
 
     public static void RequestHide(UIElement element)
@@ -136,4 +149,14 @@ public class UIController : MonoBehaviour
         bool currentlyHidden = IsHidden(UIElement.Inventory);
         RequestSetHidden(UIElement.Inventory, !currentlyHidden);
     }
+
+    private void GameInput_OnOpenMenu(object sender, EventArgs e)
+    {
+        bool currentlyHidden = IsHidden(UIElement.Menu);
+        RequestSetHidden(UIElement.Menu, !currentlyHidden);
+    }
+
+    // UnityEvent-friendly wrappers (static methods do not show up in Button OnClick)
+    public void HideMenu() => RequestHide(UIElement.Menu);
+
 }
