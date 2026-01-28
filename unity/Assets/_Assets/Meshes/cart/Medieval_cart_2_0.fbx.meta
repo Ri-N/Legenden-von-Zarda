@@ -3,7 +3,37 @@ guid: 3eadd8c8cc8177340b92cbe9f2f9d414
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fire_lamp_2_0
+    second: {fileID: 2100000, guid: 78de4f27279af70469b9e748e4b94c4d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass_lamp_2_0
+    second: {fileID: 2100000, guid: 407c0fa1e6a4dc545a579f345c41159b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_lamp_2_0
+    second: {fileID: 2100000, guid: 08d00c478fc1eba4699ef0b842a822f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_wheel_2_0
+    second: {fileID: 2100000, guid: 3121b89eb1e092d4785ccb6d924642fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rope_2_0
+    second: {fileID: 2100000, guid: 9483e0c01ac27574486cc30c94a2c86c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_cart_2_0
+    second: {fileID: 2100000, guid: 6a0c98417c6e00547a757036a1343289, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

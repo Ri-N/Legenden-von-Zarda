@@ -5,6 +5,26 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Well_Bottom
+    second: {fileID: 2100000, guid: 6006a43b5060b3a4c99b94e723e94901, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Well_Handle
+    second: {fileID: 2100000, guid: 9ac986a71b62eb24581087f4f09fd4e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Well_Roof
+    second: {fileID: 2100000, guid: 87570bb97668db145b2310a2404c08fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Well_Rope
+    second: {fileID: 2100000, guid: 9cdf9275b85778b47a76688ca7a59f3c, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Well_Bottom_Metallic

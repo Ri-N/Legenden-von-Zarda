@@ -5,6 +5,11 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Barrel 1
+    second: {fileID: 2100000, guid: 6718fa29a9152f340af475728bac4e24, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Albedo_Barrel1

@@ -2185,7 +2185,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1cd1b6e4e0c5fad42bafbfb05de23cdf, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: -3411833636083890820, guid: d2224bef993be684c828ec717dd7d701, type: 3}
+      objectReference: {fileID: 2100000, guid: 6fa02c634d539ff4a9717e8dfd0d3145, type: 2}
     - target: {fileID: 919132149155446097, guid: 1cd1b6e4e0c5fad42bafbfb05de23cdf, type: 3}
       propertyPath: m_Name
       value: protagonist_house_without_roof
@@ -2638,7 +2638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292531844705200639, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.394989
+      value: -0.39501953
       objectReference: {fileID: 0}
     - target: {fileID: 750351817607256297, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5517,7 +5517,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3411833636083890820, guid: d2224bef993be684c828ec717dd7d701, type: 3}
+  - {fileID: 2100000, guid: 6fa02c634d539ff4a9717e8dfd0d3145, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10567,7 +10567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292531844705200639, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.394989
+      value: -0.39501953
       objectReference: {fileID: 0}
     - target: {fileID: 750351817607256297, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11267,6 +11267,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7918335002988649766, guid: 55b759b77f8fb5540a9fe7e2c13ab64f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: bd05fee0df708ce4da38ada2888faa5f, type: 2}
     - target: {fileID: 919132149155446097, guid: 55b759b77f8fb5540a9fe7e2c13ab64f, type: 3}
       propertyPath: m_Name
       value: ground
@@ -13788,7 +13792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 292531844705200639, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.394989
+      value: -0.39501953
       objectReference: {fileID: 0}
     - target: {fileID: 2045879369872012594, guid: 0de025371a2664287997f4fa7d4901b4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

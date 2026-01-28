@@ -3,7 +3,37 @@ guid: 4d237f4ce08262148be357670f75f1ce
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Medieval_Door
+    second: {fileID: 2100000, guid: a370cf886ec7c404397b9d03026913b3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof
+    second: {fileID: 2100000, guid: 50fccc1a001cf57449abaf3450dcf4f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: b4e5973dfee3590409202c0655414a52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Window 8
+    second: {fileID: 2100000, guid: 9939e9da658194649bfa120b1bd43090, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: balcony
+    second: {fileID: 2100000, guid: e078de04e2e6fa24bbdae4ee42db8fc7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: props
+    second: {fileID: 2100000, guid: 0e2beb3b11c87234f84f1d8a3e90c48e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
