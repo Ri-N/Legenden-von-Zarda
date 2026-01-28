@@ -31,6 +31,7 @@ public enum UIElement
     PlayerInteract,
     Dialogue,
     Inventory,
+    Menu,
     All
 }
 
@@ -38,5 +39,6 @@ public enum BlockReason
 {
     Inventory,
     Dialogue,
-    Sleep
+    Sleep,
+    Menu
 }

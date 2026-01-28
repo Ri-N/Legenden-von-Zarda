@@ -165,7 +165,8 @@ public class GameBlockController : MonoBehaviour
         // This prevents the inventory from "blocking itself".
         bool uiBlocked =
             IsReasonActive(BlockReason.Dialogue) ||
-            IsReasonActive(BlockReason.Sleep);
+            IsReasonActive(BlockReason.Sleep) ||
+            IsReasonActive(BlockReason.Menu);
 
         for (int i = 0; i < gameplayBlockables.Count; i++)
         {
@@ -189,6 +190,8 @@ public class GameBlockController : MonoBehaviour
 
         UIController.Instance.InventoryOpened += OnInventoryOpened;
         UIController.Instance.InventoryClosed += OnInventoryClosed;
+        UIController.Instance.MenuOpened += OnMenuOpened;
+        UIController.Instance.MenuClosed += OnMenuClosed;
         isSubscribedToUI = true;
     }
 
@@ -199,6 +202,8 @@ public class GameBlockController : MonoBehaviour
         {
             UIController.Instance.InventoryOpened -= OnInventoryOpened;
             UIController.Instance.InventoryClosed -= OnInventoryClosed;
+            UIController.Instance.MenuOpened -= OnMenuOpened;
+            UIController.Instance.MenuClosed -= OnMenuClosed;
         }
 
         isSubscribedToUI = false;
@@ -220,5 +225,15 @@ public class GameBlockController : MonoBehaviour
     private void OnInventoryClosed()
     {
         SetBlocked(BlockReason.Inventory, false);
+    }
+
+    private void OnMenuOpened()
+    {
+        SetBlocked(BlockReason.Menu, true);
+    }
+
+    private void OnMenuClosed()
+    {
+        SetBlocked(BlockReason.Menu, false);
     }
 }
