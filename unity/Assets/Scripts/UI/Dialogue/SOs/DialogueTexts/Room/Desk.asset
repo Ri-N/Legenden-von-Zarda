@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: Desk
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueText
+  lines:
+  - speakerName: "Erz\xE4hler"
+    text: Du betrachtest deinen Schreibtisch
+  - speakerName: Du
+    text: Das Buch von gestern liegt noch offen.
+  - speakerName: Du
+    text: "Ich wei\xDF nicht mal mehr, wann ich aufgeh\xF6rt habe zu lesen."
+  - speakerName: Du
+    text: "Der Tisch sieht aus, als h\xE4tte er den Kampf schon aufgegeben."
+  - speakerName: Du
+    text: Genau wie der Stuhl.
+  - speakerName: Du
+    text: "Aufr\xE4umen w\xE4re gut."
+  choices: []

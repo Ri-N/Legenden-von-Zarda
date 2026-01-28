@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IBlockable
 {
     public static Player Instance { get; private set; }
     private CharacterController characterController;
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private float targetRotation;
     private float rotationVelocity;
 
-    private GameObject mainCamera;
+    private Camera mainCamera;
 
     [Header("Interaction ranges by area")]
     [SerializeField] private float interactionRangeRoom = 5f;
@@ -62,10 +62,7 @@ public class Player : MonoBehaviour
         Instance = this;
         characterController = GetComponent<CharacterController>();
 
-        if (mainCamera == null)
-        {
-            mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        }
+        mainCamera = Camera.main;
     }
 
     private void Start()
@@ -126,21 +123,43 @@ public class Player : MonoBehaviour
             speed = targetSpeed;
         }
 
-        // Camera-relative input direction
-        Vector3 inputDirection = new Vector3(inputVector.x, 0.0f, inputVector.y).normalized;
-
-        // Rotate towards movement direction relative to camera
-        if (inputVector != Vector2.zero)
+        // Ensure we always reference the actual render camera (driven by CinemachineBrain).
+        if (mainCamera == null)
         {
-            float cameraYaw = (mainCamera != null) ? mainCamera.transform.eulerAngles.y : transform.eulerAngles.y;
-            targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
+            mainCamera = Camera.main;
+        }
 
+        // Camera-relative movement (project camera axes onto the ground plane).
+        Vector3 camForward = transform.forward;
+        Vector3 camRight = transform.right;
+
+        if (mainCamera != null)
+        {
+            camForward = mainCamera.transform.forward;
+            camRight = mainCamera.transform.right;
+        }
+
+        camForward.y = 0f;
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 moveDir = (camRight * inputVector.x + camForward * inputVector.y);
+        if (moveDir.sqrMagnitude > 1f)
+        {
+            moveDir.Normalize();
+        }
+
+        // Rotate towards movement direction.
+        if (moveDir.sqrMagnitude > 0.0001f)
+        {
+            targetRotation = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
-        // Move in the facing direction
-        Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+        // Horizontal movement direction.
+        Vector3 targetDirection = moveDir;
 
         // Gravity / vertical
         if (characterController.isGrounded && verticalVelocity < 0f)
@@ -150,7 +169,9 @@ public class Player : MonoBehaviour
 
         verticalVelocity += gravity * Time.deltaTime;
 
-        Vector3 motion = targetDirection.normalized * (speed * Time.deltaTime);
+        Vector3 motion = (targetDirection.sqrMagnitude > 0.0001f)
+            ? targetDirection * (speed * Time.deltaTime)
+            : Vector3.zero;
         motion.y = verticalVelocity * Time.deltaTime;
 
         characterController.Move(motion);
@@ -218,13 +239,27 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnInteractAction(object sender, EventArgs e)
     {
+        // When blocked, ignore interaction input entirely.
+        if (!canMove)
+            return;
+
         IInteractable interactable = GetInteractableObject();
         interactable?.Interact();
     }
 
-    public void SetCanMove(bool canMove)
+    private void SetCanMove(bool canMove)
     {
         this.canMove = canMove;
+    }
+
+    public void SetBlocked(bool blocked)
+    {
+        SetCanMove(!blocked);
+
+        if (blocked)
+        {
+            SetCurrentInteractable(null);
+        }
     }
 
     private void OnAreaChanged(PlayerArea newArea, PlayerAreaContext ctx)

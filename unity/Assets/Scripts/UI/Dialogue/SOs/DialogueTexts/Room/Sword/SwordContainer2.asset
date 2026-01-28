@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6229ad8e4b8fc4818a6293153b45fff8, type: 3}
+  m_Name: SwordContainer2
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueText
+  lines:
+  - speakerName: Du
+    text: Allein lassen bringt nichts.
+  - speakerName: Du
+    text: Mitnehmen auch nicht.
+  - speakerName: Entscheidung
+    text: Willst du das Schwert mitnehmen?
+  choices:
+  - optionText: Ja
+    next: {fileID: 0}
+    outcomes:
+    - {fileID: 11400000, guid: 08692d70ab1c943afb788d005b6aa70d, type: 2}
+    - {fileID: 11400000, guid: edc8944038b4a47b5906fdc3a07a4e41, type: 2}
+  - optionText: Nein
+    next: {fileID: 0}
+    outcomes: []

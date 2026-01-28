@@ -2,8 +2,7 @@ using Unity.Cinemachine;
 
 using UnityEngine;
 
-
-public class CameraManager : MonoBehaviour
+public class CameraManager : MonoBehaviour, IBlockable
 {
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera topDownCam;
@@ -12,6 +11,13 @@ public class CameraManager : MonoBehaviour
     [Header("Priorities")]
     [SerializeField] private int activePriority = 20;
     [SerializeField] private int inactivePriority = 10;
+
+    private bool isBlocked;
+
+    // Cinemachine input components that drive camera rotation from mouse/stick.
+    // Depending on the Cinemachine version/setup, one of these may be present.
+    private CinemachineInputAxisController topDownAxis;
+    private CinemachineInputAxisController thirdPersonAxis;
 
     private void OnEnable()
     {
@@ -31,6 +37,12 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
+        // Cache input components once. Disabling these will block camera rotation.
+        topDownAxis = topDownCam != null ? topDownCam.GetComponent<CinemachineInputAxisController>() : null;
+        thirdPersonAxis = thirdPersonCam != null ? thirdPersonCam.GetComponent<CinemachineInputAxisController>() : null;
+
+        ApplyBlockedState();
+
         // Ensure we're subscribed even if the singleton becomes available after OnEnable
         if (PlayerWorldState.Instance != null)
         {
@@ -75,5 +87,17 @@ public class CameraManager : MonoBehaviour
 
         thirdPersonCam.Priority = third ? activePriority : inactivePriority;
         topDownCam.Priority = third ? inactivePriority : activePriority;
+    }
+
+    private void ApplyBlockedState()
+    {
+        if (topDownAxis != null) topDownAxis.enabled = !isBlocked;
+        if (thirdPersonAxis != null) thirdPersonAxis.enabled = !isBlocked;
+    }
+
+    public void SetBlocked(bool blocked)
+    {
+        isBlocked = blocked;
+        ApplyBlockedState();
     }
 }

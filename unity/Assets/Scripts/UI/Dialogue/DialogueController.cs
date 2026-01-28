@@ -21,12 +21,19 @@ public class DialogueController : MonoBehaviour
     [Tooltip("Child object that contains the dialogue UI visuals. This will be hidden before outcomes execute.")]
     [SerializeField] private GameObject visualRoot;
 
-    [TextArea(5, 10)]
-    private readonly Queue<string> paragraphs = new();
+    [Header("Input")]
+    [Tooltip("Optional. If not set, will try to find GameInput at runtime.")]
+    [SerializeField] private GameInput gameInput;
+
+    private bool isSubscribedToInteractAdvance;
+    private int lastAdvanceFrame = -1;
+
+    private readonly Queue<DialogueText.DialogueLine> lines = new();
 
     private bool conversationEnded;
     private bool isTyping;
 
+    private DialogueText.DialogueLine currentLine;
     private string p;
     private Coroutine typeDialogueCoroutine;
     private const string HTML_ALPHA = "<color=#00000000>";
@@ -56,7 +63,7 @@ public class DialogueController : MonoBehaviour
 
         if (dialogueText != null)
         {
-            if (activeDialogue == null || conversationEnded || paragraphs.Count == 0)
+            if (activeDialogue == null || conversationEnded || lines.Count == 0)
             {
                 activeDialogue = dialogueText;
             }
@@ -67,7 +74,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        if (paragraphs.Count == 0)
+        if (lines.Count == 0)
         {
             if (!conversationEnded)
             {
@@ -82,7 +89,13 @@ public class DialogueController : MonoBehaviour
 
         if (!isTyping)
         {
-            p = paragraphs.Dequeue();
+            currentLine = lines.Dequeue();
+
+            // Update speaker per line (each paragraph may have a different speaker)
+            if (nameText != null)
+                nameText.text = currentLine.speakerName;
+
+            p = currentLine.text;
             typeDialogueCoroutine = StartCoroutine(TypeDialogueText(p));
         }
         else
@@ -90,7 +103,7 @@ public class DialogueController : MonoBehaviour
             FinishParagraphEarly();
         }
 
-        if (paragraphs.Count == 0)
+        if (lines.Count == 0)
         {
             if (activeDialogue.choices != null && activeDialogue.choices.Length > 0)
             {
@@ -104,13 +117,54 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    private void SubscribeInteractAdvance()
+    {
+        if (gameInput == null)
+        {
+            Debug.LogError("[DialogueController] GameInput is missing.");
+            return;
+        }
+
+        gameInput.OnInteractAction -= OnInteractAdvance;
+        gameInput.OnInteractAction += OnInteractAdvance;
+        isSubscribedToInteractAdvance = true;
+    }
+
+    private void UnsubscribeInteractAdvance()
+    {
+        if (!isSubscribedToInteractAdvance) return;
+
+        if (gameInput != null)
+            gameInput.OnInteractAction -= OnInteractAdvance;
+
+        isSubscribedToInteractAdvance = false;
+    }
+
+    private void OnInteractAdvance(object sender, System.EventArgs e)
+    {
+        // Debounce: if multiple systems fire in the same frame, do not double-advance.
+        if (lastAdvanceFrame == Time.frameCount)
+            return;
+        lastAdvanceFrame = Time.frameCount;
+
+        // Only advance if dialogue is currently active/visible.
+        if (!gameObject.activeInHierarchy) return;
+        if (activeDialogue == null) return;
+        if (visualRoot != null && !visualRoot.activeSelf) return;
+
+        DisplayNextParagraph(null);
+    }
+
     private void StartConversation(DialogueText dialogueText)
     {
         HideChoices();
         awaitingChoice = false;
         activeDialogue = dialogueText;
 
-        Player.Instance.SetCanMove(false);
+        // Block gameplay while dialogue is active (movement, inventory, interact prompt, etc.)
+        if (GameBlockController.Instance != null)
+            GameBlockController.Instance.SetBlocked(BlockReason.Dialogue, true);
+
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
@@ -121,28 +175,36 @@ public class DialogueController : MonoBehaviour
             visualRoot.SetActive(true);
         }
 
-        nameText.text = dialogueText.speakerName;
+        lines.Clear();
 
-        foreach (string paragraph in dialogueText.paragraphs)
+        if (dialogueText.lines == null || dialogueText.lines.Length == 0)
         {
-            paragraphs.Enqueue(paragraph);
+            Debug.LogWarning("DialogueController: DialogueText has no lines.", this);
         }
+        else
+        {
+            foreach (DialogueText.DialogueLine line in dialogueText.lines)
+            {
+                lines.Enqueue(line);
+            }
+        }
+
+        SubscribeInteractAdvance();
     }
 
     private void EndConversation()
     {
-        Player.Instance.SetCanMove(true);
+        UnsubscribeInteractAdvance();
 
-        // Capture interactor before clearing state.
+        if (GameBlockController.Instance != null)
+            GameBlockController.Instance.SetBlocked(BlockReason.Dialogue, false);
+
         object interactor = currentInteractor;
 
-        // Hide choice UI immediately.
         HideChoices();
 
-        // Hide the dialogue visuals (but keep this controller active).
         if (visualRoot == null)
         {
-            // Best-effort auto-detect: prefer first child as visuals container.
             if (transform.childCount > 0)
             {
                 visualRoot = transform.GetChild(0).gameObject;
@@ -160,7 +222,7 @@ public class DialogueController : MonoBehaviour
 
         awaitingChoice = false;
         activeDialogue = null;
-        paragraphs.Clear();
+        lines.Clear();
         conversationEnded = false;
 
         // Run deferred outcomes after the UI has been hidden (next frame), then deactivate this panel.
@@ -303,8 +365,13 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        paragraphs.Clear();
+        lines.Clear();
         conversationEnded = false;
         DisplayNextParagraph(choice.next);
+    }
+
+    private void OnDisable()
+    {
+        UnsubscribeInteractAdvance();
     }
 }
