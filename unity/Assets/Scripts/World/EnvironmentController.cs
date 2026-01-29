@@ -89,7 +89,7 @@ public class EnvironmentController : MonoBehaviour
         float angle = t * 360f;
 
         // Rotate around world up to keep it simple and deterministic.
-        globalLight.transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        globalLight.transform.rotation = Quaternion.AngleAxis(angle, new Vector3(1, -1, 0));
     }
 
     public IEnumerator LerpSkybox(Texture2D a, Texture2D b, float time)
