@@ -190,7 +190,7 @@ public class TimeManager : MonoBehaviour
         {
             requireAtLeastOneStep = false;
 
-            var next = GetNextPhase(CurrentPhase);
+            StoryTimePhase next = GetNextPhase(CurrentPhase);
             TriggerTimeTransition(next, stepSeconds, cancelActiveCycle: false);
             yield return new WaitForSeconds(stepSeconds);
         }
@@ -218,7 +218,7 @@ public class TimeManager : MonoBehaviour
 
     private void SetClockForPhase(StoryTimePhase phase)
     {
-        var t = GetClockForPhase(phase);
+        (int hours, int minutes) t = GetClockForPhase(phase);
         Hours = t.hours;
         Minutes = t.minutes;
     }
@@ -289,15 +289,15 @@ public class TimeManager : MonoBehaviour
             StopActiveCycle(reachedTarget: false);
         }
 
-        var from = environment != null ? environment.GetVisualsForPhase(CurrentPhase) : default;
-        var to = environment != null ? environment.GetVisualsForPhase(targetPhase) : default;
+        (Texture2D skybox, _) = environment != null ? environment.GetVisualsForPhase(CurrentPhase) : default;
+        (Texture2D skybox, Gradient lightGradient) to = environment != null ? environment.GetVisualsForPhase(targetPhase) : default;
 
-        skyboxRoutine = StartCoroutine(RunSkyboxTransition(from.skybox, to.skybox, time));
+        skyboxRoutine = StartCoroutine(RunSkyboxTransition(skybox, to.skybox, time));
         lightRoutine = StartCoroutine(RunLightTransition(to.lightGradient, time));
 
         int fromHours = Hours;
         int fromMinutes = Minutes;
-        var toTime = GetClockForPhase(targetPhase);
+        (int hours, int minutes) toTime = GetClockForPhase(targetPhase);
         sunRoutine = StartCoroutine(RunSunTransition(fromHours, fromMinutes, toTime.hours, toTime.minutes, time));
 
         CurrentPhase = targetPhase;
@@ -318,9 +318,9 @@ public class TimeManager : MonoBehaviour
         if (cycleRoutine != null)
             StopActiveCycle(reachedTarget: false);
 
-        var v = environment != null ? environment.GetVisualsForPhase(phase) : default;
-        environment?.ApplySkyboxImmediate(v.skybox);
-        environment?.ApplyLightImmediate(v.lightGradient);
+        (Texture2D skybox, Gradient lightGradient) = environment != null ? environment.GetVisualsForPhase(phase) : default;
+        environment?.ApplySkyboxImmediate(skybox);
+        environment?.ApplyLightImmediate(lightGradient);
 
         SetClockForPhase(phase);
         CurrentPhase = phase;

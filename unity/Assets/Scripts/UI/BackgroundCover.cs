@@ -59,11 +59,11 @@ public class BackgroundCover : MonoBehaviour
 
     private bool NeedsRefit()
     {
-        var cam = targetCamera != null ? targetCamera : Camera.main;
+        Camera cam = targetCamera != null ? targetCamera : Camera.main;
 
         if (_image != null && _parentRt != null)
         {
-            var parentSize = _parentRt.rect.size;
+            Vector2 parentSize = _parentRt.rect.size;
             if (parentSize != _lastParentSize) return true;
         }
 
@@ -77,12 +77,12 @@ public class BackgroundCover : MonoBehaviour
 
     private void Fit()
     {
-        var cam = targetCamera != null ? targetCamera : Camera.main;
+        Camera cam = targetCamera != null ? targetCamera : Camera.main;
 
 
         if (_image != null && _rt != null)
         {
-            var sprite = _image.sprite;
+            Sprite sprite = _image.sprite;
             if (sprite == null) return;
 
 

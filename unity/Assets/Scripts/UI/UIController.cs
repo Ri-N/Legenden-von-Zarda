@@ -37,7 +37,7 @@ public class UIController : MonoBehaviour
         // Apply to UI elements via interface
         for (int i = 0; i < registeredElements.Count; i++)
         {
-            var ui = registeredElements[i];
+            IUIElementController ui = registeredElements[i];
             if (ui == null) continue;
 
             if (element == UIElement.All || ui.Element == element)
