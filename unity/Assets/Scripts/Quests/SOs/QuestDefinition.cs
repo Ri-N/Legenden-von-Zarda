@@ -71,7 +71,7 @@ public class QuestDefinition : ScriptableObject
         HashSet<string> ids = new();
         for (int i = 0; i < steps.Count; i++)
         {
-            var step = steps[i];
+            QuestStepDefinition step = steps[i];
             if (string.IsNullOrWhiteSpace(step.stepId))
             {
                 error = $"Quest '{questId}' has a step without stepId.";

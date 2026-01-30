@@ -77,7 +77,7 @@ public class GameBlockController : MonoBehaviour
 
         for (int i = 0; i < sources.Length; i++)
         {
-            var mb = sources[i];
+            MonoBehaviour mb = sources[i];
             if (mb == null) continue;
 
             if (mb is IBlockable blockable)
@@ -170,14 +170,14 @@ public class GameBlockController : MonoBehaviour
 
         for (int i = 0; i < gameplayBlockables.Count; i++)
         {
-            var b = gameplayBlockables[i];
+            IBlockable b = gameplayBlockables[i];
             if (b == null) continue;
             b.SetBlocked(gameplayBlocked);
         }
 
         for (int i = 0; i < uiBlockables.Count; i++)
         {
-            var b = uiBlockables[i];
+            IBlockable b = uiBlockables[i];
             if (b == null) continue;
             b.SetBlocked(uiBlocked);
         }

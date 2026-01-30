@@ -186,7 +186,7 @@ public class PlayerInventoryController : MonoBehaviour, IUIElementController, IB
 
         if (spawnedSlots == null) return;
 
-        foreach (var slot in spawnedSlots)
+        foreach (Slot slot in spawnedSlots)
         {
             if (slot != null)
                 slot.Clicked -= OnSlotClicked;

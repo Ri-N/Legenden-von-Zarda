@@ -32,7 +32,7 @@ public class House : MonoBehaviour
 
     private void TrySubscribe()
     {
-        var ws = PlayerWorldState.Instance;
+        PlayerWorldState ws = PlayerWorldState.Instance;
         if (ws == null) return;
 
         if (!subscribed)
