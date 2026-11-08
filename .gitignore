@@ -30,3 +30,5 @@ npm-debug.log*
 # --- .NET build artifacts ---
 **/[Bb]in/
 **/[Oo]bj/
+# --- macOS ---
+.DS_Store
