@@ -7,8 +7,8 @@ The player wakes up in a small room, finds a rusty sword and steps out into a fo
 village. There they meet characters like Bertram, the greedy blacksmith, and Gregory, the
 quiet guard at the training arena, and follows quests through dialogues with choices.
 
-![Level blockout of the village](docs/gamedesign/village_scene/village_blockout_screenshots/Step_4_Village_Enter_Bird_Perspective.png)
-*Level blockout of the village, used to plan the player's path before the final 3D assets were built.*
+![Main menu of Legends of Zarda](docs/screenshots/main-menu.jpg)
+*Main menu (background artwork by Jordon Lee)*
 
 ## Features
 
@@ -32,6 +32,13 @@ quiet guard at the training arena, and follows quests through dialogues with cho
 
 The full workflow between the roles is described in
 [`docs/roles-and-processes.md`](docs/roles-and-processes.md) (German).
+
+## Design process
+
+Each scene was planned as a level blockout first, to map out the player's path before the
+final 3D assets were built.
+
+<img src="docs/gamedesign/village_scene/village_blockout_screenshots/Step_4_Village_Enter_Bird_Perspective.png" alt="Level blockout of the village" width="480">
 
 ## Development process
 
